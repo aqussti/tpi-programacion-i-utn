@@ -1,8 +1,8 @@
 # 🌍 Gestión de Datos de Países en Python
 
-**Trabajo Práctico Integrador (TPI) – Programación 1**  
+**Trabajo Práctico Integrador – Programación 1**  
 **Institución:** Universidad Tecnológica Nacional (UTN)  
-**Carrera:** Tecnicatura Universitaria en Programación a Distancia  
+**Carrera:** Tecnicatura Universitaria en Programación
 
 ---
 
