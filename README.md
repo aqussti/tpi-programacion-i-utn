@@ -41,11 +41,11 @@ El código fuente está organizado de manera modular, asignando una responsabili
 ### Ejecución
 1. Clonar el repositorio en tu máquina local:
    ```bash
-   git clone https://github.com/usuario-lider/nombre-del-repositorio.git
+   git clone https://github.com/aqussti/tpi-programacion-i-utn.git
    ```
 2. Ingresar al directorio del proyecto:
    ```bash
-   cd nombre-del-repositorio
+   cd tpi-programacion-i-utn
    ```
 3. Ejecutar el archivo principal desde la consola:
    ```bash
