@@ -141,7 +141,7 @@ El desarrollo del código, la documentación teórica y la presentación audiovi
 * **Dataset:** Confección y validación del archivo base `paises.csv`.
 * **Documentación (PDF):** Redacción del marco teórico sobre *Listas*, *Diccionarios* y *Archivos CSV*.
 
-### 2. Nombre y Apellido (@usuario-github-2) — *Consultas y Validaciones*
+### 2. Francisco Ruiz (@fran1399) — *Consultas y Validaciones*
 * **Desarrollo (`consultas.py`):** Implementación de búsqueda por nombre (parcial/exacta) y filtros por continente, rango de población y rango de superficie.
 * **Desarrollo (`validaciones.py`):** Creación de funciones transversales de validación (entero positivo, texto no vacío, rango válido y opción de menú) utilizadas en todo el sistema.
 * **Documentación (PDF):** Redacción del marco teórico sobre *Condicionales* y *Funciones*, y confección del *Diagrama de Flujo* de operaciones principales.
@@ -151,7 +151,7 @@ El desarrollo del código, la documentación teórica y la presentación audiovi
 * **Repositorio y `README.md`:** Creación y administración del repositorio en GitHub, y redacción integral del archivo `README.md`.
 * **Documentación (PDF):** Redacción del marco teórico sobre *Ordenamientos* y *Estadísticas básicas*, además de la sección de *Decisiones Técnicas y Arquitectura*.
 
-### 4. Nombre y Apellido (@usuario-github-4) — *Integración, Menú e Informe Final*
+### 4. Fausto Rivero (@faustorivero69-hue) — *Integración, Menú e Informe Final*
 * **Desarrollo (`main.py`):** Diseño del menú de consola, bucle principal de ejecución, integración de todos los módulos y manejo de mensajes claros de éxito y error.
 * **Documentación (PDF):** Armado, maquetación y revisión final del documento PDF (carátula, índice, numeración de páginas, capturas de ejecución, bibliografía y enlaces).
 * **Entrega y Video:** Apertura y cierre de la presentación en video, subida con permisos públicos y armado del archivo `.zip` final para la entrega.
