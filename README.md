@@ -136,7 +136,7 @@ Ingrese el nombre (o parte del nombre) del país a buscar: argen
 
 El desarrollo del código, la documentación teórica y la presentación audiovisual se dividieron equitativamente entre los cuatro integrantes del equipo:
 
-### 1. Nombre y Apellido (@usuario-github-1) — *Datos y Gestión*
+### 1. Facundo Piriz (@Fakzup) — *Datos y Gestión*
 * **Desarrollo (`datos.py`):** Implementación de lectura del CSV con control de errores de formato, guardado de datos, alta de nuevos países y actualización de población y superficie.
 * **Dataset:** Confección y validación del archivo base `paises.csv`.
 * **Documentación (PDF):** Redacción del marco teórico sobre *Listas*, *Diccionarios* y *Archivos CSV*.
