@@ -34,6 +34,8 @@ El código fuente está organizado de manera modular, asignando una responsabili
 
 ## 🚀 Requisitos e Instrucciones de Uso
 
+**Estado actual:** están implementados `ordenar.py` y `estadisticas.py`. La ejecución del programa completo requiere incorporar los módulos restantes y el dataset. Las instrucciones de `main.py` y los ejemplos de consola describen el funcionamiento previsto una vez integrado el proyecto.
+
 ### Requisitos previos
 * Tener instalado **Python 3.8** o superior.
 * No requiere instalación de librerías externas (utiliza únicamente la biblioteca estándar de Python).
@@ -127,8 +129,43 @@ Ingrese el nombre (o parte del nombre) del país a buscar: argen
 
 ## 🔗 Enlaces y Documentación Obligatoria
 
-* **🎥 Video Demostrativo (Acceso Público):** [Ver video en YouTube / Google Drive](https://enlace-al-video-publico.com) *(Asegurar permisos de visualización pública)*.
-* **📄 Informe Académico y Técnico (PDF):** Disponible directamente en la raíz de este repositorio como [`Informe_TPI.pdf`](./Informe_TPI.pdf) *(o mediante [este enlace externo](https://enlace-al-pdf.com))*.
+* **🎥 Video Demostrativo (Acceso Público):** Pendiente de grabación y publicación. Agregar aquí el enlace público antes de la entrega.
+* **📄 Informe Académico y Técnico (PDF):** Pendiente de armado grupal. Incorporar `Informe_TPI.pdf` en la raíz y enlazarlo aquí antes de la entrega.
+* **Texto para el informe:** [Ordenamientos, estadísticas y decisiones técnicas](./Informe_Agustin.md), listo para incorporar al PDF grupal.
+
+---
+
+## Integración de ordenamiento y estadísticas
+
+Ambos módulos reciben una lista de diccionarios con las claves del CSV. Los valores de `poblacion` y `superficie` deben ser enteros positivos, y los nombres de continente deben estar normalizados desde la carga o validación.
+
+```python
+from ordenar import ordenar_paises
+from estadisticas import calcular_estadisticas
+
+paises = [
+    {"nombre": "Argentina", "poblacion": 45376763,
+     "superficie": 2780400, "continente": "América"},
+    {"nombre": "Japón", "poblacion": 125800000,
+     "superficie": 377975, "continente": "Asia"},
+]
+
+ordenados = ordenar_paises(paises, "poblacion", ascendente=False)
+print([pais["nombre"] for pais in ordenados])  # ['Japón', 'Argentina']
+
+resumen = calcular_estadisticas(paises)
+if paises:
+    print(resumen["mayor_poblacion"]["nombre"])  # Japón
+    print(f'{resumen["promedio_poblacion"]:.2f}')  # 85588381.50
+else:
+    print("No hay países cargados para calcular estadísticas.")
+```
+
+* `ordenar_paises(paises, criterio="nombre", ascendente=True)` admite `nombre`, `poblacion` y `superficie`. Usa inserción, devuelve una nueva lista y conserva el orden original entre valores iguales. Para nombres ignora mayúsculas y minúsculas, pero conserva tildes. Un criterio o sentido inválido genera `ValueError`, que debe manejarse desde el menú.
+* `calcular_estadisticas(paises)` devuelve las claves `mayor_poblacion`, `menor_poblacion`, `promedio_poblacion`, `promedio_superficie` y `cantidad_por_continente`. Los extremos contienen el diccionario del país; ante empates se devuelve el primero de la lista.
+* También se pueden importar por separado `pais_mayor_poblacion`, `pais_menor_poblacion`, `promedio_poblacion`, `promedio_superficie` y `contar_por_continente` desde `estadisticas.py`.
+* Con una lista vacía, el ordenamiento devuelve `[]`, los extremos y promedios devuelven `None` y el conteo devuelve `{}`. El menú debe informar que no hay datos antes de formatear los indicadores.
+* Estas funciones no imprimen, no modifican registros y no guardan el CSV. La lista ordenada y los extremos comparten los diccionarios originales; el menú debe tratarlos como resultados de consulta.
 
 ---
 
