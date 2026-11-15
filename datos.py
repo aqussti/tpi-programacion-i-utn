@@ -50,11 +50,16 @@ def leer_paises(ruta=ARCHIVO_CSV):
                         f"en la línea {numero_linea}."
                     )
 
+                continente = fila["continente"].strip().capitalize()
+
+                if continente.lower() == "america":
+                    continente = "América"
+
                 pais = {
                     "nombre": fila["nombre"].strip(),
                     "poblacion": poblacion,
                     "superficie": superficie,
-                    "continente": fila["continente"].strip().capitalize()
+                    "continente": continente
                 }
 
                 paises.append(pais)
@@ -77,6 +82,18 @@ def guardar_paises(paises, ruta=ARCHIVO_CSV):
     """
 
     try:
+        paises_normalizados = []
+
+        for pais in paises:
+            pais_nuevo = pais.copy()
+            continente = pais_nuevo["continente"].strip().capitalize()
+
+            if continente.lower() == "america":
+                continente = "América"
+
+            pais_nuevo["continente"] = continente
+            paises_normalizados.append(pais_nuevo)
+
         with open(ruta, "w", encoding="utf-8", newline="") as archivo:
 
             escritor = csv.DictWriter(
@@ -85,7 +102,7 @@ def guardar_paises(paises, ruta=ARCHIVO_CSV):
             )
 
             escritor.writeheader()
-            escritor.writerows(paises)
+            escritor.writerows(paises_normalizados)
 
         print("Datos guardados correctamente.")
         return True
@@ -102,6 +119,9 @@ def agregar_pais(paises, nombre, poblacion, superficie, continente):
 
     nombre = nombre.strip()
     continente = continente.strip().capitalize()
+
+    if continente.lower() == "america":
+        continente = "América"
 
     if not nombre or not continente:
         print("Error: el nombre y el continente son obligatorios.")
