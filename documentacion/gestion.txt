@@ -1,0 +1,22 @@
+==============================================================
+  AGREGAR PAÍS
+==============================================================
+Nombre del país: Portugal
+Población: 10000000
+Superficie en km²: 92212
+
+Continentes registrados: América, Asia, Europa, Oceanía, África
+Continente: europa
+
+[OK] El país quedó registrado y guardado en el archivo CSV.
+==============================================================
+  ACTUALIZAR DATOS
+==============================================================
+Nombre del país a actualizar: portugal
+
+Datos actuales:
+  - Portugal | Población: 10.000.000 hab. | Superficie: 92.212 km² | Continente: Europa
+Nueva población: 10500000
+Nueva superficie en km²: 92212
+
+[OK] Los cambios quedaron guardados en el archivo CSV.

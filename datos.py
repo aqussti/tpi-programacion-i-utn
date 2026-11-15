@@ -1,197 +1,117 @@
-
+"""Lectura, escritura y actualización del dataset de países."""
 import csv
+import os
+import tempfile
 from pathlib import Path
+from validaciones import entero_positivo, normalizar_continente, normalizar_texto
 
-# Ruta del archivo CSV, ubicado en la misma carpeta que datos.py
 ARCHIVO_CSV = Path(__file__).with_name("paises.csv")
-
-# Columnas obligatorias del archivo
 COLUMNAS = ["nombre", "poblacion", "superficie", "continente"]
 
 
-def leer_paises(ruta=ARCHIVO_CSV):
-    """
-    Lee los países desde un archivo CSV.
-    Devuelve una lista de diccionarios.
-    """
+def validar_pais(nombre, poblacion, superficie, continente):
+    """Construye un registro válido con los tipos y nombres comunes."""
+    if not isinstance(nombre, str) or not nombre.strip():
+        raise ValueError("El nombre del país es obligatorio.")
+    if not isinstance(continente, str):
+        raise ValueError("El continente debe ser un texto.")
+    return {"nombre": nombre.strip(), "poblacion": entero_positivo(poblacion),
+            "superficie": entero_positivo(superficie),
+            "continente": normalizar_continente(continente)}
 
+
+def leer_paises(ruta=None):
+    """Lee el CSV. Un archivo inválido genera un error y no se sobrescribe."""
+    ruta = ARCHIVO_CSV if ruta is None else Path(ruta)
     paises = []
+    nombres = set()
+    with open(ruta, "r", encoding="utf-8-sig", newline="") as archivo:
+        lector = csv.DictReader(archivo, strict=True)
+        if lector.fieldnames != COLUMNAS:
+            raise ValueError("Las columnas del CSV no son correctas.")
+        for numero_linea, fila in enumerate(lector, start=2):
+            if None in fila or any(fila.get(c) is None for c in COLUMNAS):
+                raise ValueError(f"Cantidad de campos incorrecta en la línea {numero_linea}.")
+            try:
+                pais = validar_pais(**fila)
+                clave = normalizar_texto(pais["nombre"])
+                if clave in nombres:
+                    raise ValueError("País duplicado.")
+            except ValueError as error:
+                raise ValueError(f"Línea {numero_linea}: {error}") from error
+            nombres.add(clave)
+            paises.append(pais)
+    return paises
 
+
+def guardar_paises(paises, ruta=None):
+    """Reemplaza el CSV solo después de validar y escribir todos los registros."""
+    ruta = ARCHIVO_CSV if ruta is None else Path(ruta)
+    temporal = None
     try:
-        with open(ruta, "r", encoding="utf-8-sig", newline="") as archivo:
-            lector = csv.DictReader(archivo)
-
-            if lector.fieldnames != COLUMNAS:
-                raise ValueError("Las columnas del CSV no son correctas.")
-
-            for numero_linea, fila in enumerate(lector, start=2):
-
-                # Controlar campos vacíos o columnas adicionales
-                if None in fila or any(
-                    fila.get(campo) is None or not fila[campo].strip()
-                    for campo in COLUMNAS
-                ):
-                    raise ValueError(
-                        f"Datos incompletos en la línea {numero_linea}."
-                    )
-
-                try:
-                    poblacion = int(fila["poblacion"])
-                    superficie = int(fila["superficie"])
-                except ValueError:
-                    raise ValueError(
-                        f"Población o superficie inválida "
-                        f"en la línea {numero_linea}."
-                    )
-
-                if poblacion <= 0 or superficie <= 0:
-                    raise ValueError(
-                        f"Los valores deben ser positivos "
-                        f"en la línea {numero_linea}."
-                    )
-
-                continente = fila["continente"].strip().capitalize()
-
-                if continente.lower() == "america":
-                    continente = "América"
-
-                pais = {
-                    "nombre": fila["nombre"].strip(),
-                    "poblacion": poblacion,
-                    "superficie": superficie,
-                    "continente": continente
-                }
-
-                paises.append(pais)
-
-        print("Países cargados correctamente.")
-        return paises
-
-    except FileNotFoundError:
-        print("Error: no se encontró el archivo CSV.")
-        return []
-
-    except (OSError, csv.Error, ValueError) as error:
-        print(f"Error al leer el archivo: {error}")
-        return []
-
-
-def guardar_paises(paises, ruta=ARCHIVO_CSV):
-    """
-    Guarda una lista de países en un archivo CSV.
-    """
-
-    try:
-        paises_normalizados = []
-
+        registros = []
+        nombres = set()
         for pais in paises:
-            pais_nuevo = pais.copy()
-            continente = pais_nuevo["continente"].strip().capitalize()
-
-            if continente.lower() == "america":
-                continente = "América"
-
-            pais_nuevo["continente"] = continente
-            paises_normalizados.append(pais_nuevo)
-
-        with open(ruta, "w", encoding="utf-8", newline="") as archivo:
-
-            escritor = csv.DictWriter(
-                archivo,
-                fieldnames=COLUMNAS
-            )
-
+            registro = validar_pais(**pais)
+            clave = normalizar_texto(registro["nombre"])
+            if clave in nombres:
+                raise ValueError("No se pueden guardar países duplicados.")
+            nombres.add(clave)
+            registros.append(registro)
+        # El temporal está en la misma carpeta para permitir el reemplazo.
+        with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", newline="",
+                                         dir=ruta.parent, delete=False) as archivo:
+            temporal = Path(archivo.name)
+            escritor = csv.DictWriter(archivo, fieldnames=COLUMNAS)
             escritor.writeheader()
-            escritor.writerows(paises_normalizados)
-
-        print("Datos guardados correctamente.")
+            escritor.writerows(registros)
+        os.replace(temporal, ruta)
         return True
-
-    except (OSError, csv.Error) as error:
+    except (OSError, csv.Error, ValueError, TypeError) as error:
         print(f"Error al guardar los datos: {error}")
         return False
+    finally:
+        if temporal is not None and temporal.exists():
+            try:
+                temporal.unlink()
+            except OSError:
+                # Un fallo de limpieza no debe ocultar el error de guardado.
+                pass
 
 
-def agregar_pais(paises, nombre, poblacion, superficie, continente):
-    """
-    Agrega un país nuevo a la lista y guarda los cambios.
-    """
-
-    nombre = nombre.strip()
-    continente = continente.strip().capitalize()
-
-    if continente.lower() == "america":
-        continente = "América"
-
-    if not nombre or not continente:
-        print("Error: el nombre y el continente son obligatorios.")
-        return False
-
+def agregar_pais(paises, nombre, poblacion, superficie, continente, ruta=None):
+    """Agrega un país sin duplicados y conserva la memoria si falla el guardado."""
     try:
-        poblacion = int(poblacion)
-        superficie = int(superficie)
-    except (ValueError, TypeError):
-        print("Error: población y superficie deben ser números enteros.")
+        nuevo = validar_pais(nombre, poblacion, superficie, continente)
+    except ValueError as error:
+        print(f"Error: {error}")
         return False
-
-    if poblacion <= 0 or superficie <= 0:
-        print("Error: los valores deben ser positivos.")
+    if any(normalizar_texto(p["nombre"]) == normalizar_texto(nuevo["nombre"])
+           for p in paises):
+        print("Error: el país ya existe.")
         return False
-
-    # Evitar países duplicados
-    for pais in paises:
-        if pais["nombre"].lower() == nombre.lower():
-            print("Error: el país ya existe.")
-            return False
-
-    nuevo_pais = {
-        "nombre": nombre,
-        "poblacion": poblacion,
-        "superficie": superficie,
-        "continente": continente
-    }
-
-    nuevos_datos = paises + [nuevo_pais]
-
-    if guardar_paises(nuevos_datos):
-        paises.append(nuevo_pais)
-        print(f"País {nombre} agregado correctamente.")
+    if guardar_paises(paises + [nuevo], ruta):
+        paises.append(nuevo)
         return True
-
     return False
 
 
-def actualizar_pais(paises, nombre, nueva_poblacion, nueva_superficie):
-    """
-    Actualiza la población y superficie de un país.
-    """
-
+def actualizar_pais(paises, nombre, nueva_poblacion, nueva_superficie, ruta=None):
+    """Actualiza población y superficie solo si el guardado funciona."""
     try:
-        nueva_poblacion = int(nueva_poblacion)
-        nueva_superficie = int(nueva_superficie)
-    except (ValueError, TypeError):
-        print("Error: los valores deben ser números enteros.")
+        poblacion = entero_positivo(nueva_poblacion)
+        superficie = entero_positivo(nueva_superficie)
+    except ValueError as error:
+        print(f"Error: {error}")
         return False
-
-    if nueva_poblacion <= 0 or nueva_superficie <= 0:
-        print("Error: los valores deben ser positivos.")
-        return False
-
-    nuevos_datos = [pais.copy() for pais in paises]
-
-    for pais in nuevos_datos:
-
-        if pais["nombre"].lower() == nombre.strip().lower():
-
-            pais["poblacion"] = nueva_poblacion
-            pais["superficie"] = nueva_superficie
-
-            if guardar_paises(nuevos_datos):
-                paises[:] = nuevos_datos
-                print(f"Datos de {pais['nombre']} actualizados correctamente.")
+    nuevos = [p.copy() for p in paises]
+    for pais in nuevos:
+        if normalizar_texto(pais["nombre"]) == normalizar_texto(nombre):
+            pais["poblacion"] = poblacion
+            pais["superficie"] = superficie
+            if guardar_paises(nuevos, ruta):
+                paises[:] = nuevos
                 return True
-
             return False
-
     print("Error: no se encontró el país.")
     return False

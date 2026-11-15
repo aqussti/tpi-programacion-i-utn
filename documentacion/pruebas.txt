@@ -1,0 +1,13 @@
+Población: abc
+Error: debe ingresar un número entero (sin letras ni decimales).
+Población: -1
+Error: el número debe ser mayor que cero.
+Población: 1.5
+Error: debe ingresar un número entero (sin letras ni decimales).
+Población: 8
+
+python -B -m unittest -v test_sistema
+----------------------------------------------------------------------
+Ran 14 tests in 0.057s
+
+OK

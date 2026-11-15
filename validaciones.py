@@ -5,6 +5,39 @@ Todos los módulos del TPI pueden importarlas.
 Cada función tiene una única responsabilidad.
 """
 
+import unicodedata
+
+
+def normalizar_texto(texto):
+    """Normaliza espacios, mayúsculas y tildes para comparar nombres."""
+    texto = unicodedata.normalize("NFD", texto.strip().casefold())
+    return "".join(c for c in texto if unicodedata.category(c) != "Mn")
+
+
+def normalizar_continente(texto):
+    """Devuelve la escritura común del continente o informa un valor inválido."""
+    continentes = {
+        "america": "América", "europa": "Europa", "asia": "Asia",
+        "africa": "África", "oceania": "Oceanía", "antartida": "Antártida",
+    }
+    clave = normalizar_texto(texto)
+    if clave not in continentes:
+        raise ValueError("Continente inválido. Use América, Europa, Asia, África, Oceanía o Antártida.")
+    return continentes[clave]
+
+
+def entero_positivo(valor):
+    """Convierte enteros o texto entero; rechaza decimales y booleanos."""
+    if isinstance(valor, bool) or not isinstance(valor, (int, str)):
+        raise ValueError("El valor debe ser un número entero positivo.")
+    try:
+        numero = int(valor)
+    except ValueError:
+        raise ValueError("El valor debe ser un número entero positivo.") from None
+    if numero <= 0:
+        raise ValueError("El valor debe ser un número entero positivo.")
+    return numero
+
 
 def pedir_texto_no_vacio(mensaje):
     """Pide un texto por consola hasta que no esté vacío. Devuelve el texto sin espacios sobrantes."""

@@ -8,15 +8,7 @@ con los resultados (nunca modifican la lista original).
 Si no hay resultados devuelven una lista vacía; el menú decide qué mensaje mostrar.
 """
 
-import unicodedata
-
-
-def normalizar(texto):
-    """Pasa a minúsculas y quita tildes para comparar sin importar el formato.
-    Ej: 'América' -> 'america'."""
-    texto = texto.strip().lower()
-    descompuesto = unicodedata.normalize("NFD", texto)
-    return "".join(c for c in descompuesto if unicodedata.category(c) != "Mn")
+from validaciones import normalizar_texto as normalizar
 
 
 def buscar_por_nombre(paises, texto, exacta=False):

@@ -1,0 +1,23 @@
+Selección: Argentina, Brasil y Chile. Población descendente.
+Brasil: 213.993.437 habitantes
+Argentina: 45.376.763 habitantes
+Chile: 19.603.733 habitantes
+
+Estadísticas del dataset completo:
+==============================================================
+  ESTADÍSTICAS DEL DATASET
+==============================================================
+
+País con mayor población: China (1.412.000.000 hab.)
+País con menor población: Uruguay (3.426.260 hab.)
+Promedio de población: 229.983.424,21 hab.
+Promedio de superficie: 2.642.743,79 km²
+
+Cantidad de países por continente:
+  - América: 6
+  - Asia: 4
+  - Europa: 4
+  - Oceanía: 2
+  - África: 3
+
+Total de países: 19

@@ -6,12 +6,25 @@ Archivo: main.py
 Rol: Integración, menú principal y experiencia de usuario.
 """
 
+import csv
 import os
 import sys
 
 from datos import leer_paises, agregar_pais, actualizar_pais
-from consultas import buscar_pais, filtrar_paises
-from validaciones import pedir_entero, pedir_cadena, validar_opcion
+from consultas import (
+    buscar_por_nombre,
+    filtrar_por_continente,
+    filtrar_por_poblacion,
+    filtrar_por_superficie,
+    obtener_continentes,
+)
+from validaciones import (
+    pedir_texto_no_vacio,
+    pedir_entero_positivo,
+    pedir_rango,
+    pedir_opcion_menu,
+    normalizar_continente as validar_continente,
+)
 from ordenar import ordenar_paises
 from estadisticas import calcular_estadisticas
 
@@ -19,38 +32,49 @@ from estadisticas import calcular_estadisticas
 # ---------------------------------------------------------------------------
 # Contrato de integración con los módulos de los compañeros
 # ---------------------------------------------------------------------------
-# datos.leer_paises() -> list[dict]
-# datos.agregar_pais(paises, nombre, poblacion, superficie, continente) -> bool
-# datos.actualizar_pais(paises, nombre, nueva_poblacion,
-#                        nueva_superficie) -> bool
+# datos.py
+#   leer_paises() -> list[dict]
+#   agregar_pais(paises, nombre, poblacion, superficie, continente) -> bool
+#   actualizar_pais(paises, nombre, nueva_poblacion, nueva_superficie) -> bool
 #
-# consultas.buscar_pais(paises, termino) -> list[dict]
-# consultas.filtrar_paises(paises, continente=None, poblacion_min=None,
-#                          poblacion_max=None, superficie_min=None,
-#                          superficie_max=None) -> list[dict]
+# consultas.py
+#   buscar_por_nombre(paises, texto, exacta=False) -> list[dict]
+#   filtrar_por_continente(paises, continente) -> list[dict]
+#   filtrar_por_poblacion(paises, minimo, maximo) -> list[dict]
+#   filtrar_por_superficie(paises, minimo, maximo) -> list[dict]
+#   obtener_continentes(paises) -> list[str]
 #
-# validaciones.pedir_entero(mensaje) -> int
-# validaciones.pedir_cadena(mensaje) -> str
-# validaciones.validar_opcion(opcion, opciones_validas) -> bool
+# validaciones.py
+#   pedir_texto_no_vacio(mensaje) -> str
+#   pedir_entero_positivo(mensaje, permitir_cero=False) -> int
+#   pedir_rango(mensaje_min, mensaje_max) -> tuple[int, int]
+#   pedir_opcion_menu(mensaje, opciones_validas) -> str
 #
-# ordenar.ordenar_paises(paises, criterio="nombre",
-#                        ascendente=True) -> list[dict]
-# estadisticas.calcular_estadisticas(paises) -> dict
+# ordenar.py
+#   ordenar_paises(paises, criterio="nombre", ascendente=True) -> list[dict]
 #
-# Nota: estadisticas.py devuelve un diccionario con los indicadores. La
-# presentación por consola se centraliza en main.py para mantener separadas
-# la lógica de cálculo y la interfaz de usuario.
+# estadisticas.py
+#   calcular_estadisticas(paises) -> dict
+#
+# Criterio de integración: consultas.py, ordenar.py y estadisticas.py
+# reciben datos, calculan y devuelven resultados sin imprimir por consola.
+# datos.py y validaciones.py emiten mensajes puntuales de confirmación o
+# error. main.py concentra la presentación principal, las preguntas al
+# usuario y la navegación entre opciones.
 # ---------------------------------------------------------------------------
 
-OPCIONES_MENU = [1, 2, 3, 4, 5, 6, 7]
-OPCIONES_FILTRO = [1, 2, 3, 4]
-OPCIONES_CRITERIO = [1, 2, 3, 4]
-OPCIONES_SENTIDO = [1, 2]
+
+# Opciones del menú principal y de los submenús. Se usan cadenas porque
+# validaciones.pedir_opcion_menu() compara directamente lo ingresado.
+OPCIONES_MENU = [str(numero) for numero in range(1, 8)]
+OPCIONES_FILTRO = ["1", "2", "3", "0"]
+OPCIONES_ORDEN = ["1", "2", "3", "0"]
+OPCIONES_SENTIDO = ["1", "2"]
 
 CRITERIOS = {
-    1: "nombre",
-    2: "poblacion",
-    3: "superficie",
+    "1": "nombre",
+    "2": "poblacion",
+    "3": "superficie",
 }
 
 ETIQUETAS_CRITERIO = {
@@ -71,6 +95,9 @@ def configurar_consola():
 
     try:
         os.system("chcp 65001 > nul")
+        # Se reconfiguran los tres flujos para que las tildes y la "ñ"
+        # funcionen tanto en la consola como en entradas redirigidas.
+        sys.stdin.reconfigure(encoding="utf-8")
         sys.stdout.reconfigure(encoding="utf-8")
         sys.stderr.reconfigure(encoding="utf-8")
     except Exception:
@@ -93,9 +120,9 @@ def pausar():
     """Espera a que el usuario presione Enter para continuar."""
     try:
         input("\nPresione Enter para continuar...")
-    except EOFError:
-        # Si la entrada se cierra, se evita un error y el bucle principal
-        # se encarga de finalizar de forma ordenada.
+    except (EOFError, KeyboardInterrupt):
+        # Si la entrada se cierra o el usuario interrumpe, se informa con un
+        # salto de línea y el bucle principal decide cómo continuar.
         print()
 
 
@@ -147,28 +174,12 @@ def mostrar_lista(paises, titulo):
         mostrar_pais(pais)
 
 
-def normalizar_lista(resultado):
-    """Adapta el resultado de una consulta a una lista de países."""
-    if resultado is None:
-        return []
-    if isinstance(resultado, dict):
-        return [resultado]
-    if isinstance(resultado, (list, tuple)):
-        return list(resultado)
-    return []
-
-
 def cargar_datos():
-    """Carga los países desde el CSV controlando cualquier error inesperado."""
+    """Carga el dataset y diferencia un archivo faltante de uno inválido."""
     try:
-        paises = leer_paises()
-        if isinstance(paises, list):
-            return paises
-
-        print("[ERROR] El módulo de datos no devolvió una lista válida.")
-        return []
-    except Exception as error:
-        print(f"[ERROR] No se pudieron cargar los datos: {error}")
+        return leer_paises()
+    except FileNotFoundError:
+        print("[AVISO] No existe el CSV. Se creará al agregar el primer país.")
         return []
 
 
@@ -204,33 +215,31 @@ def opcion_agregar(paises):
     print("  AGREGAR PAÍS")
     print("=" * 62)
 
-    nombre = pedir_cadena("Nombre del país: ")
-    if nombre is None or not nombre.strip():
-        print("\n[ERROR] El nombre es obligatorio.")
+    # [INTEGRACIÓN] validaciones.pedir_texto_no_vacio() repite la pregunta
+    # hasta obtener un texto con contenido.
+    nombre = pedir_texto_no_vacio("Nombre del país: ")
+
+    # [INTEGRACIÓN] Antes de llamar a datos.agregar_pais() se controla la
+    # duplicación con la búsqueda exacta de consultas.py, que ignora tildes
+    # y mayúsculas. Así se evita cargar "Mexico" y "México" a la vez.
+    if buscar_por_nombre(paises, nombre, exacta=True):
+        print("\n[ERROR] Ya existe un país con ese nombre.")
         return
 
-    poblacion = pedir_entero("Población: ")
-    if poblacion is None or poblacion <= 0:
-        print("\n[ERROR] La población debe ser un número entero positivo.")
-        return
+    poblacion = pedir_entero_positivo("Población: ")
+    superficie = pedir_entero_positivo("Superficie en km²: ")
 
-    superficie = pedir_entero("Superficie en km²: ")
-    if superficie is None or superficie <= 0:
-        print("\n[ERROR] La superficie debe ser un número entero positivo.")
-        return
+    continentes = obtener_continentes(paises)
+    if continentes:
+        print(f"\nContinentes registrados: {', '.join(continentes)}")
 
-    continente = pedir_cadena("Continente: ")
-    if continente is None or not continente.strip():
-        print("\n[ERROR] El continente es obligatorio.")
-        return
-
-    agregado = agregar_pais(
-        paises,
-        nombre.strip(),
-        poblacion,
-        superficie,
-        continente.strip(),
+    continente = validar_continente(
+        pedir_texto_no_vacio("Continente: "),
     )
+
+    # [INTEGRACIÓN] datos.agregar_pais() valida, guarda el CSV y actualiza
+    # la lista en memoria. Devuelve True si la operación fue exitosa.
+    agregado = agregar_pais(paises, nombre, poblacion, superficie, continente)
 
     if agregado:
         print("\n[OK] El país quedó registrado y guardado en el archivo CSV.")
@@ -255,22 +264,17 @@ def opcion_actualizar(paises):
         print("\nNo hay países cargados. Agregue uno primero.")
         return
 
-    nombre = pedir_cadena("Nombre del país a actualizar: ")
-    if nombre is None or not nombre.strip():
-        print("\n[ERROR] El nombre es obligatorio.")
-        return
+    termino = pedir_texto_no_vacio("Nombre del país a actualizar: ")
 
-    termino = nombre.strip()
-    coincidencias = normalizar_lista(buscar_pais(paises, termino))
-    exactos = [
-        pais for pais in coincidencias
-        if str(pais.get("nombre", "")).strip().casefold() == termino.casefold()
-    ]
+    # [INTEGRACIÓN] Se busca primero la coincidencia exacta. Si no existe,
+    # se muestran las coincidencias parciales para ayudar al usuario.
+    exactos = buscar_por_nombre(paises, termino, exacta=True)
 
     if not exactos:
-        if coincidencias:
+        parciales = buscar_por_nombre(paises, termino)
+        if parciales:
             print("\nNo hay una coincidencia exacta. Países encontrados:")
-            for pais in coincidencias:
+            for pais in parciales:
                 mostrar_pais(pais)
             print("Vuelva a intentarlo con el nombre exacto.")
         else:
@@ -281,16 +285,11 @@ def opcion_actualizar(paises):
     print("\nDatos actuales:")
     mostrar_pais(pais_actual)
 
-    poblacion = pedir_entero("Nueva población: ")
-    if poblacion is None or poblacion <= 0:
-        print("\n[ERROR] La población debe ser un número entero positivo.")
-        return
+    poblacion = pedir_entero_positivo("Nueva población: ")
+    superficie = pedir_entero_positivo("Nueva superficie en km²: ")
 
-    superficie = pedir_entero("Nueva superficie en km²: ")
-    if superficie is None or superficie <= 0:
-        print("\n[ERROR] La superficie debe ser un número entero positivo.")
-        return
-
+    # [INTEGRACIÓN] datos.actualizar_pais() guarda los cambios en el CSV y
+    # actualiza la lista en memoria. Devuelve True si pudo actualizar.
     actualizado = actualizar_pais(
         paises,
         pais_actual["nombre"],
@@ -321,13 +320,12 @@ def opcion_buscar(paises):
         print("\nNo hay países cargados.")
         return
 
-    termino = pedir_cadena("Ingrese el nombre o parte del nombre: ")
-    if termino is None or not termino.strip():
-        print("\n[ERROR] El término de búsqueda no puede estar vacío.")
-        return
+    termino = pedir_texto_no_vacio("Ingrese el nombre o parte del nombre: ")
 
-    termino = termino.strip()
-    resultados = normalizar_lista(buscar_pais(paises, termino))
+    # [INTEGRACIÓN] buscar_por_nombre() normaliza mayúsculas y tildes y
+    # devuelve una lista nueva con las coincidencias.
+    modo = pedir_opcion_menu("Tipo de búsqueda: 1. Parcial / 2. Exacta: ", ["1", "2"])
+    resultados = buscar_por_nombre(paises, termino, exacta=(modo == "2"))
 
     if resultados:
         mostrar_lista(resultados, f"Resultados para '{termino}'")
@@ -339,38 +337,47 @@ def opcion_buscar(paises):
 # Opción 4: filtrar países
 # ---------------------------------------------------------------------------
 
-def filtrar_por_continente(paises):
-    """Filtra los países por continente."""
-    continente = pedir_cadena("Continente a filtrar (ej. América): ")
-    if continente is None or not continente.strip():
-        print("\n[ERROR] Debe ingresar un continente.")
+def filtrar_continente(paises):
+    """Muestra los continentes disponibles y filtra por el elegido."""
+    continentes = obtener_continentes(paises)
+
+    if not continentes:
+        print("\nNo hay continentes registrados.")
         return
 
-    continente = continente.strip()
-    resultados = normalizar_lista(
-        filtrar_paises(paises, continente=continente)
+    print("\nContinentes disponibles:")
+    for indice, continente in enumerate(continentes, start=1):
+        print(f"  {indice}. {continente}")
+    print("  0. Volver")
+
+    opciones = [str(indice) for indice in range(1, len(continentes) + 1)]
+    opciones.append("0")
+    opcion = pedir_opcion_menu(
+        "Seleccione un continente: ",
+        opciones,
     )
+
+    if opcion == "0":
+        return
+
+    continente = continentes[int(opcion) - 1]
+
+    # [INTEGRACIÓN] filtrar_por_continente() compara sin distinguir
+    # mayúsculas ni tildes.
+    resultados = filtrar_por_continente(paises, continente)
     mostrar_lista(resultados, f"Países de {continente}")
 
 
-def filtrar_por_poblacion(paises):
+def filtrar_poblacion(paises):
     """Filtra los países por un rango de población."""
-    minimo = pedir_entero("Población mínima: ")
-    maximo = pedir_entero("Población máxima: ")
-
-    if minimo is None or maximo is None or minimo < 0 or maximo < 0:
-        print("\n[ERROR] Los valores deben ser enteros no negativos.")
-        return
-    if minimo > maximo:
-        print(
-            "\n[ERROR] La población mínima no puede ser "
-            "mayor que la máxima."
-        )
-        return
-
-    resultados = normalizar_lista(
-        filtrar_paises(paises, poblacion_min=minimo, poblacion_max=maximo)
+    # [INTEGRACIÓN] pedir_rango() valida enteros no negativos y que el
+    # mínimo no supere al máximo antes de devolver la tupla.
+    minimo, maximo = pedir_rango(
+        "Población mínima: ",
+        "Población máxima: ",
     )
+
+    resultados = filtrar_por_poblacion(paises, minimo, maximo)
     mostrar_lista(
         resultados,
         f"Países con población entre {formatear_numero(minimo)} "
@@ -378,24 +385,14 @@ def filtrar_por_poblacion(paises):
     )
 
 
-def filtrar_por_superficie(paises):
+def filtrar_superficie(paises):
     """Filtra los países por un rango de superficie."""
-    minimo = pedir_entero("Superficie mínima en km²: ")
-    maximo = pedir_entero("Superficie máxima en km²: ")
-
-    if minimo is None or maximo is None or minimo < 0 or maximo < 0:
-        print("\n[ERROR] Los valores deben ser enteros no negativos.")
-        return
-    if minimo > maximo:
-        print(
-            "\n[ERROR] La superficie mínima no puede ser "
-            "mayor que la máxima."
-        )
-        return
-
-    resultados = normalizar_lista(
-        filtrar_paises(paises, superficie_min=minimo, superficie_max=maximo)
+    minimo, maximo = pedir_rango(
+        "Superficie mínima en km²: ",
+        "Superficie máxima en km²: ",
     )
+
+    resultados = filtrar_por_superficie(paises, minimo, maximo)
     mostrar_lista(
         resultados,
         f"Países con superficie entre {formatear_numero(minimo)} "
@@ -416,20 +413,22 @@ def opcion_filtrar(paises):
     print("  1. Por continente")
     print("  2. Por rango de población")
     print("  3. Por rango de superficie")
-    print("  4. Volver al menú principal")
+    print("  0. Volver al menú principal")
     print("-" * 62)
 
-    opcion = pedir_entero("Seleccione una opción (1-4): ")
-    if opcion is None or not validar_opcion(opcion, OPCIONES_FILTRO):
-        print("\n[ERROR] Opción inválida.")
-        return
+    opcion = pedir_opcion_menu(
+        "Seleccione una opción (0-3): ",
+        OPCIONES_FILTRO,
+    )
 
-    if opcion == 1:
-        filtrar_por_continente(paises)
-    elif opcion == 2:
-        filtrar_por_poblacion(paises)
-    elif opcion == 3:
-        filtrar_por_superficie(paises)
+    if opcion == "0":
+        return
+    if opcion == "1":
+        filtrar_continente(paises)
+    elif opcion == "2":
+        filtrar_poblacion(paises)
+    elif opcion == "3":
+        filtrar_superficie(paises)
 
 
 # ---------------------------------------------------------------------------
@@ -449,29 +448,34 @@ def opcion_ordenar(paises):
     print("  1. Por nombre")
     print("  2. Por población")
     print("  3. Por superficie")
-    print("  4. Volver al menú principal")
+    print("  0. Volver al menú principal")
     print("-" * 62)
 
-    opcion = pedir_entero("Seleccione el criterio (1-4): ")
-    if opcion is None or not validar_opcion(opcion, OPCIONES_CRITERIO):
-        print("\n[ERROR] Opción inválida.")
-        return
+    opcion = pedir_opcion_menu(
+        "Seleccione el criterio (0-3): ",
+        OPCIONES_ORDEN,
+    )
 
-    if opcion == 4:
+    if opcion == "0":
         return
 
     criterio = CRITERIOS[opcion]
 
     print("\n  1. Ascendente (menor a mayor)")
     print("  2. Descendente (mayor a menor)")
-    sentido = pedir_entero("Seleccione el sentido (1-2): ")
-    if sentido is None or not validar_opcion(sentido, OPCIONES_SENTIDO):
-        print("\n[ERROR] Opción inválida.")
-        return
+    sentido = pedir_opcion_menu(
+        "Seleccione el sentido (1-2): ",
+        OPCIONES_SENTIDO,
+    )
 
-    ascendente = sentido == 1
-    ordenados = normalizar_lista(
-        ordenar_paises(paises, criterio=criterio, ascendente=ascendente)
+    ascendente = sentido == "1"
+
+    # [INTEGRACIÓN] ordenar_paises() crea una copia y no modifica la
+    # lista original. Devuelve una lista nueva ya ordenada.
+    ordenados = ordenar_paises(
+        paises,
+        criterio=criterio,
+        ascendente=ascendente,
     )
 
     etiqueta_criterio = ETIQUETAS_CRITERIO[criterio]
@@ -486,13 +490,20 @@ def opcion_ordenar(paises):
 # Opción 6: estadísticas
 # ---------------------------------------------------------------------------
 
-def mostrar_estadisticas(paises):
+def opcion_estadisticas(paises):
     """Calcula y muestra los indicadores del módulo estadisticas.py."""
+    print("=" * 62)
+    print("  ESTADÍSTICAS DEL DATASET")
+    print("=" * 62)
+
     if not paises:
         print("\nNo hay países cargados para calcular estadísticas.")
         return
 
+    # [INTEGRACIÓN] calcular_estadisticas() devuelve un diccionario con los
+    # extremos, los promedios y el conteo por continente. No imprime nada.
     resumen = calcular_estadisticas(paises)
+
     if not isinstance(resumen, dict):
         print("\n[ERROR] No se pudieron calcular las estadísticas.")
         return
@@ -504,9 +515,8 @@ def mostrar_estadisticas(paises):
     por_continente = resumen.get("cantidad_por_continente") or {}
 
     if mayor and menor:
-        nombre_mayor = mayor.get("nombre", "(sin nombre)")
         print(
-            f"\nPaís con mayor población: {nombre_mayor} "
+            f"\nPaís con mayor población: {mayor.get('nombre', '(sin nombre)')} "
             f"({formatear_numero(mayor.get('poblacion', 0))} hab.)"
         )
         print(
@@ -537,31 +547,23 @@ def mostrar_estadisticas(paises):
     print(f"\nTotal de países: {len(paises)}")
 
 
-def opcion_estadisticas(paises):
-    """Muestra el encabezado y los indicadores estadísticos."""
-    print("=" * 62)
-    print("  ESTADÍSTICAS DEL DATASET")
-    print("=" * 62)
-    mostrar_estadisticas(paises)
-
-
 # ---------------------------------------------------------------------------
 # Punto de entrada y bucle principal
 # ---------------------------------------------------------------------------
 
 def ejecutar_opcion(opcion, paises):
     """Deriva la opción elegida a la función correspondiente."""
-    if opcion == 1:
+    if opcion == "1":
         opcion_agregar(paises)
-    elif opcion == 2:
+    elif opcion == "2":
         opcion_actualizar(paises)
-    elif opcion == 3:
+    elif opcion == "3":
         opcion_buscar(paises)
-    elif opcion == 4:
+    elif opcion == "4":
         opcion_filtrar(paises)
-    elif opcion == 5:
+    elif opcion == "5":
         opcion_ordenar(paises)
-    elif opcion == 6:
+    elif opcion == "6":
         opcion_estadisticas(paises)
 
 
@@ -569,8 +571,14 @@ def main():
     """Punto de entrada del sistema."""
     configurar_consola()
     limpiar_consola()
+
     print("Cargando datos desde el archivo CSV...")
-    paises = cargar_datos()
+    try:
+        paises = cargar_datos()
+    except (OSError, ValueError, csv.Error) as error:
+        print(f"[ERROR] No se pudo cargar el CSV: {error}")
+        print("Corrija el archivo antes de continuar. No se modificaron los datos.")
+        return
 
     if paises:
         print(f"\n[OK] Se cargaron {len(paises)} países.")
@@ -591,17 +599,16 @@ def main():
         mostrar_menu(len(paises))
 
         try:
-            opcion = pedir_entero("Seleccione una opción (1-7): ")
+            # [INTEGRACIÓN] pedir_opcion_menu() rechaza letras y números
+            # fuera de rango sin lanzar una excepción: repite la pregunta
+            # hasta recibir una opción válida. El try-except externo queda
+            # como red de seguridad para errores inesperados del sistema.
+            opcion = pedir_opcion_menu(
+                "Seleccione una opción (1-7): ",
+                OPCIONES_MENU,
+            )
 
-            if opcion is None or not validar_opcion(opcion, OPCIONES_MENU):
-                print(
-                    "\n[ERROR] Opción inválida. "
-                    "Ingrese un número del 1 al 7."
-                )
-                pausar()
-                continue
-
-            if opcion == 7:
+            if opcion == "7":
                 limpiar_consola()
                 print("=" * 62)
                 print("  Gracias por usar el Sistema de Gestión de Países.")
@@ -616,7 +623,9 @@ def main():
             print("\n\nSaliendo del programa...")
             break
         except ValueError as error:
-            print(f"\n[ERROR] {error}")
+            # Salvaguarda ante datos numéricos inválidos provenientes de
+            # alguna función integrada.
+            print(f"\n[ERROR] Dato inválido: {error}")
             pausar()
         except Exception as error:
             print(f"\n[ERROR] Ocurrió un problema inesperado: {error}")
@@ -627,6 +636,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-

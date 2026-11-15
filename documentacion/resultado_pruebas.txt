@@ -1,0 +1,19 @@
+test_alta_y_actualizacion_persisten (test_sistema.PruebasSistema.test_alta_y_actualizacion_persisten) ... ok
+test_arranque_con_csv_invalido_no_sobrescribe (test_sistema.PruebasSistema.test_arranque_con_csv_invalido_no_sobrescribe) ... ok
+test_busquedas (test_sistema.PruebasSistema.test_busquedas) ... ok
+test_csv_invalido (test_sistema.PruebasSistema.test_csv_invalido) ... ok
+test_dataset (test_sistema.PruebasSistema.test_dataset) ... ok
+test_estadisticas (test_sistema.PruebasSistema.test_estadisticas) ... ok
+test_filtros_y_limites (test_sistema.PruebasSistema.test_filtros_y_limites) ... ok
+test_guardado_fallido_no_modifica_memoria_ni_archivo (test_sistema.PruebasSistema.test_guardado_fallido_no_modifica_memoria_ni_archivo) ... ok
+test_listas_vacias (test_sistema.PruebasSistema.test_listas_vacias) ... ok
+test_menu_completo_y_salida (test_sistema.PruebasSistema.test_menu_completo_y_salida) ... ok
+test_normalizacion_y_duplicados (test_sistema.PruebasSistema.test_normalizacion_y_duplicados) ... ok
+test_ordenamientos_estables (test_sistema.PruebasSistema.test_ordenamientos_estables) ... ok
+test_rechazo_datos_invalidos (test_sistema.PruebasSistema.test_rechazo_datos_invalidos) ... ok
+test_validaciones_interactivas (test_sistema.PruebasSistema.test_validaciones_interactivas) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.057s
+
+OK

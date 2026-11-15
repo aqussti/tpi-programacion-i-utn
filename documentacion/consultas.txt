@@ -1,0 +1,13 @@
+==============================================================
+  BUSCAR PAÍS
+==============================================================
+Ingrese el nombre o parte del nombre: japon
+Tipo de búsqueda: 1. Parcial / 2. Exacta: 2
+
+--- Resultados para 'japon' (1 resultado) ---
+  - Japón | Población: 125.800.000 hab. | Superficie: 377.975 km² | Continente: Asia
+Población mínima: 0
+Población máxima: 5000000
+
+--- Países con población entre 0 y 5.000.000 (1 resultado) ---
+  - Uruguay | Población: 3.426.260 hab. | Superficie: 176.215 km² | Continente: América

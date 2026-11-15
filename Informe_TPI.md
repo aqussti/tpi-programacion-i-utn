@@ -1,762 +1,226 @@
-<!--
-PLANTILLA DEL INFORME TÉCNICO – TRABAJO PRÁCTICO INTEGRADOR
-Programación 1 – Tecnicatura Universitaria en Programación a Distancia
+# Gestión de Datos de Países en Python
 
-INSTRUCCIONES DE USO
-1. Reemplazar todos los textos entre corchetes: [Texto aquí].
-2. Actualizar los números de página [N] del índice después de exportar el PDF.
-3. Guardar las imágenes en la carpeta img/ y reemplazar los marcadores de figura.
-4. Exportar a PDF en A4, márgenes de 2,5 cm, fuente Calibri o Arial 11,
-   interlineado 1,5 y numeración de páginas en el pie.
-5. Verificar que el repositorio de GitHub y el video de YouTube sean públicos.
-6. Eliminar este comentario antes de la exportación final.
--->
+Trabajo Práctico Integrador - Programación 1
 
-<div align="center">
+Universidad Tecnológica Nacional
 
-<br><br>
+Tecnicatura Universitaria en Programación a Distancia
 
-<p><strong>UNIVERSIDAD TECNOLÓGICA NACIONAL</strong></p>
+Comisión 4
 
-<p>[Facultad Regional / Sede]</p>
+Integrantes: Facundo Piriz, Francisco Ruiz, Agustin Tromba y Fausto Rivero
 
-<p><strong>Tecnicatura Universitaria en Programación a Distancia</strong></p>
+Fecha de entrega: 16 de noviembre de 2026
 
-<br>
+Aplicación de consola para gestionar países mediante archivos CSV, búsquedas, filtros, ordenamientos y estadísticas.
 
-<p><strong>Programación 1</strong></p>
+Repositorio: https://github.com/aqussti/tpi-programacion-i-utn
 
-<br><br>
-
-<p><strong>TRABAJO PRÁCTICO INTEGRADOR</strong></p>
-
-<p><strong>Gestión de Datos de Países en Python:</strong><br>
-<strong>filtros, ordenamientos y estadísticas</strong></p>
-
-<br><br><br>
-
-</div>
-
-| Datos académicos | Detalle |
-|---|---|
-| **Comisión** | [N° de comisión] |
-| **Grupo** | [N° de grupo] |
-| **Docente** | [Nombre y apellido del docente] |
-| **Modalidad** | A distancia |
-| **Fecha de entrega** | [DD/MM/AAAA] |
-| **Año lectivo** | [Año] |
-
-**Integrantes**
-
-| Nombre y apellido | Legajo / DNI | Usuario de GitHub |
-|---|---|---|
-| Facundo Piriz | [Legajo] | [@Fakzup] |
-| Francisco Ruiz | [Legajo] | [@fran1399] |
-| Agustín Tromba | [Legajo] | [@aqussti] |
-| Fausto Rivero | [Legajo] | [@faustorivero69-hue] |
-
-<div style="page-break-after: always;"></div>
+---page---
 
 ## Índice
 
-| Sección | Contenido | Página |
-|---|---|---|
-| — | Resumen | [N] |
-| 1 | Introducción | [N] |
-| 1.1 | Contexto y problemática | [N] |
-| 1.2 | Objetivos | [N] |
-| 1.3 | Alcance | [N] |
-| 1.4 | Metodología y organización del trabajo | [N] |
-| 2 | Marco Teórico | [N] |
-| 2.1 | Listas | [N] |
-| 2.2 | Diccionarios | [N] |
-| 2.3 | Funciones y modularización | [N] |
-| 2.4 | Condicionales y estructuras repetitivas | [N] |
-| 2.5 | Archivos CSV | [N] |
-| 2.6 | Ordenamientos | [N] |
-| 2.7 | Estadísticas básicas | [N] |
-| 2.8 | Validación de entradas y manejo de errores | [N] |
-| 2.9 | Síntesis de los conceptos aplicados | [N] |
-| 3 | Decisiones Técnicas y Arquitectura | [N] |
-| 3.1 | Arquitectura modular del sistema | [N] |
-| 3.2 | Modelo de datos del dominio | [N] |
-| 3.3 | Flujo principal del sistema | [N] |
-| 3.4 | Decisiones de diseño | [N] |
-| 3.5 | Interfaz de consola y experiencia de usuario | [N] |
-| 3.6 | Pruebas y capturas de ejecución | [N] |
-| 3.6.1 | Menú principal | [N] |
-| 3.6.2 | Alta de un país | [N] |
-| 3.6.3 | Actualización de datos | [N] |
-| 3.6.4 | Búsqueda por nombre | [N] |
-| 3.6.5 | Filtro por continente | [N] |
-| 3.6.6 | Filtro por rango de población o superficie | [N] |
-| 3.6.7 | Ordenamiento | [N] |
-| 3.6.8 | Estadísticas | [N] |
-| 3.6.9 | Manejo de errores | [N] |
-| 3.7 | Trazabilidad de requisitos | [N] |
-| 3.8 | Limitaciones y mejoras futuras | [N] |
-| 4 | Dificultades y Conclusiones | [N] |
-| 4.1 | Dificultades técnicas | [N] |
-| 4.2 | Dificultades de organización del equipo | [N] |
-| 4.3 | Estrategias de resolución | [N] |
-| 4.4 | Conclusiones grupales | [N] |
-| 4.5 | Aprendizajes individuales | [N] |
-| 4.6 | Reflexión final | [N] |
-| 5 | Enlaces del Proyecto | [N] |
-| 5.1 | Repositorio de GitHub | [N] |
-| 5.2 | Video demostrativo | [N] |
-| 5.3 | Documento PDF | [N] |
-| 5.4 | Verificación de enlaces | [N] |
-| 6 | Bibliografía y Webgrafía | [N] |
-| 6.1 | Bibliografía | [N] |
-| 6.2 | Webgrafía | [N] |
-| 6.3 | Nota sobre el uso de fuentes | [N] |
-| — | Anexos | [N] |
-| A | Instructivo de instalación y ejecución | [N] |
-| B | Participación de los integrantes | [N] |
-| C | Glosario | [N] |
-
-## Índice de figuras
-
-| Figura | Descripción | Página |
-|---|---|---|
-| 1 | Diagrama de flujo de las operaciones principales | [N] |
-| 2 | Menú principal del sistema | [N] |
-| 3 | Alta de un país | [N] |
-| 4 | Actualización de población y superficie | [N] |
-| 5 | Búsqueda por nombre | [N] |
-| 6 | Filtro por continente | [N] |
-| 7 | Filtro por rango de población o superficie | [N] |
-| 8 | Ordenamiento de países | [N] |
-| 9 | Estadísticas del dataset | [N] |
-| 10 | Manejo de errores en la consola | [N] |
-
-<div style="page-break-after: always;"></div>
-
-## Resumen
-
-[Texto aquí: escribir entre 150 y 200 palabras. Describir el problema abordado, la solución desarrollada, los módulos que componen el sistema, las estructuras de datos utilizadas y los resultados principales obtenidos.]
-
-**Palabras clave:** Python; archivos CSV; listas; diccionarios; modularización; ordenamientos; estadísticas; validación de datos.
-
----
-
-## 1. Introducción
+1. Introducción y alcance .......................................................... 3
+2. Marco teórico ........................................................................ 4
+3. Ordenamientos y estadísticas ................................................ 5
+4. Decisiones técnicas y arquitectura ........................................ 6
+5. Pruebas y evidencias de ejecución ......................................... 7
+6. Resultados, dificultades y conclusiones .................................. 9
+7. Bibliografía, enlaces y entrega .............................................. 10
 
-### 1.1 Contexto y problemática
+El informe documenta el estado del programa al 15/11/2026. El código, el dataset y los recursos utilizados en las evidencias están incluidos en el repositorio. La grabación del video grupal se encuentra pendiente y debe completarse antes de la entrega.
 
-[Texto aquí: explicar por qué es necesario gestionar información de países, qué dificultades presenta el manejo manual de estos datos y por qué resultan útiles las operaciones de búsqueda, filtrado, ordenamiento y cálculo de estadísticas. Mencionar el volumen creciente de información y la necesidad de evitar errores.]
+---page---
 
-[Texto aquí: justificar la elección de Python y del formato CSV como tecnologías adecuadas para el problema planteado, considerando que se trata de una aplicación de consola y de un trabajo práctico de Programación 1.]
+## 1. Introducción y alcance
 
-### 1.2 Objetivos
+El proyecto permite administrar información demográfica y geográfica de países desde una consola. Su objetivo es aplicar los contenidos de Programación 1 en un sistema que conecte lectura de archivos, validación de entradas, procesamiento de colecciones y presentación de resultados.
 
-**Objetivo general**
+La información se guarda en un CSV con cuatro columnas: nombre, población, superficie y continente. El dataset base contiene 19 países. Las cifras se utilizan como datos académicos de prueba y no se presentan como una actualización demográfica oficial. Las estadísticas describen únicamente los registros cargados.
 
-[Texto aquí: describir el objetivo general del proyecto en una o dos oraciones.]
+El usuario puede agregar un país, actualizar su población y superficie, buscar por nombre, filtrar por continente o intervalos numéricos, ordenar resultados y consultar indicadores. Las operaciones de consulta no modifican el dataset. Las altas y actualizaciones se guardan inmediatamente cuando los datos son válidos y la escritura resulta exitosa.
 
-**Objetivos específicos**
+### 1.1 Objetivos específicos
 
-- [Implementar una aplicación de consola que permita gestionar un dataset de países.]
-- [Leer y persistir los datos en un archivo CSV, controlando errores de formato.]
-- [Permitir el alta de países y la actualización de población y superficie.]
-- [Implementar búsquedas por nombre y filtros por continente, población y superficie.]
-- [Ordenar los registros por nombre, población o superficie en forma ascendente y descendente.]
-- [Calcular indicadores estadísticos: extremos, promedios y cantidad por continente.]
-- [Aplicar validaciones de entrada y mensajes claros de éxito y error.]
-- [Documentar el diseño, las decisiones técnicas y las pruebas realizadas.]
+- Representar los países con una lista de diccionarios.
+- Separar las responsabilidades mediante funciones y módulos.
+- Evitar campos vacíos, duplicados y valores numéricos inválidos.
+- Realizar búsquedas parciales y exactas, filtros inclusivos y ordenamientos en ambos sentidos.
+- Calcular máximos, mínimos, promedios y frecuencias por continente.
+- Mantener los datos en CSV y comunicar los errores sin sobrescribir información inválida.
 
-### 1.3 Alcance
+### 1.2 Alcance y ejecución
 
-[Texto aquí: delimitar el alcance. Indicar que se trata de una aplicación de consola, con persistencia local en CSV, sin base de datos, sin interfaz gráfica y sin servicios externos. Mencionar qué funcionalidades quedan fuera del alcance y por qué.]
+El sistema funciona localmente y utiliza solo la biblioteca estándar de Python. No requiere cuentas, conexión a Internet ni instalación de dependencias para ejecutarse. No contempla usuarios simultáneos, una interfaz gráfica ni una base de datos externa.
 
-### 1.4 Metodología y organización del trabajo
+Para iniciar se ejecuta `python main.py` desde la carpeta del proyecto. Las pruebas se ejecutan con `python -B -m unittest -v test_sistema`. Se utilizó Python 3.14 para las verificaciones y se revisó la sintaxis con compatibilidad para Python 3.8.
 
-[Texto aquí: describir la metodología de trabajo: reuniones, división de responsabilidades, uso de GitHub, ramas, revisiones y pruebas de integración. Explicar cómo se coordinó el equipo y cómo se validó el funcionamiento conjunto de los módulos.]
+### 1.3 Distribución de responsabilidades
 
-| Etapa | Actividad principal | Responsable | Entregable |
-|---|---|---|---|
-| 1. Diseño | [Definición del dominio, estructura de datos y contratos entre módulos] | [Integrante/s] | [Documento de diseño] |
-| 2. Desarrollo | [Implementación de módulos independientes] | [Integrante/s] | [Archivos .py] |
-| 3. Integración | [Menú principal, pruebas y corrección de interfaces] | [Integrante/s] | [main.py] |
-| 4. Documentación | [Marco teórico, arquitectura, capturas y conclusiones] | [Integrante/s] | [Informe PDF] |
-| 5. Presentación | [Grabación del video demostrativo] | [Integrante/s] | [Video público] |
+Facundo Piriz: datos, persistencia y dataset; teoría de listas, diccionarios y CSV. Francisco Ruiz: consultas y validaciones; funciones, condicionales y flujo. Agustin Tromba: ordenamiento, estadísticas, repositorio y README; teoría y decisiones técnicas. Fausto Rivero: menú e integración; armado del informe y coordinación de video y entrega. La revisión final reúne estas partes en un único programa.
 
-<div style="page-break-after: always;"></div>
+---page---
 
-## 2. Marco Teórico
+## 2. Marco teórico
 
-[Texto aquí: presentar brevemente los conceptos teóricos que se aplican en el proyecto y explicar cómo se relacionan entre sí. Cada apartado debe incluir una definición, una explicación de su aplicación concreta en el sistema y, cuando corresponda, un ejemplo de código y la fuente consultada.]
+### 2.1 Listas y diccionarios
 
-### 2.1 Listas
+Una lista es una colección ordenada y mutable; permite agregar elementos, recorrerlos y obtener su cantidad con `len`. Un diccionario asocia claves con valores. En el proyecto, cada país tiene las claves `nombre`, `poblacion`, `superficie` y `continente`; la lista principal reúne esos diccionarios. Esta organización permite recorrer países sin mantener listas paralelas que podrían perder su correspondencia [1].
 
-[Texto aquí — responsable sugerido: Facundo Piriz. Definir el concepto de lista en Python, explicar su naturaleza ordenada y mutable, y describir las operaciones utilizadas en el proyecto: creación, recorrido, agregado, búsqueda y longitud. Explicar que la lista principal contiene todos los países cargados desde el CSV.]
+Ejemplo de registro: `{"nombre": "Argentina", "poblacion": 45376763, "superficie": 2780400, "continente": "América"}`. La población y la superficie se convierten a enteros durante la lectura, de modo que las comparaciones posteriores sean numéricas.
 
-```python
-# [Insertar un ejemplo representativo del proyecto: lista de países,
-# recorrido con for o acceso a un elemento.]
-```
+Las consultas devuelven listas nuevas con referencias a los registros originales. El ordenamiento copia la lista, pero no duplica cada diccionario; por eso sus resultados se tratan como consultas y no se modifican directamente. Las actualizaciones preparan copias de los registros antes de guardar.
 
-**Aplicación en el proyecto:** [Texto aquí: indicar en qué módulos se utilizan listas y para qué.]
+### 2.2 Funciones, condicionales y ciclos
 
-**Fuente:** [Texto aquí: referencia bibliográfica o webgrafía consultada.]
+Una función agrupa una operación que puede recibir parámetros y devolver un resultado. La división en módulos permite reutilizar la misma lógica desde el menú y las pruebas. Por ejemplo, `buscar_por_nombre(paises, texto, exacta=True)` devuelve las coincidencias sin imprimirlas; el menú decide cómo mostrarlas [2].
 
-### 2.2 Diccionarios
+Las estructuras `if`, `elif` y `else` seleccionan el comportamiento según la opción o los datos. Los ciclos `for` recorren los países; `while` mantiene activo el menú y repite solicitudes de entrada hasta obtener un valor válido. La opción de salida interrumpe el ciclo principal. Las excepciones distinguen errores de datos y de archivos de un resultado de búsqueda vacío.
 
-[Texto aquí — responsable sugerido: Facundo Piriz. Definir el concepto de diccionario, explicar la relación clave-valor y describir cómo se representa cada país con las claves nombre, poblacion, superficie y continente. Mencionar las ventajas de acceso directo y la legibilidad del modelo.]
+### 2.3 Archivos CSV
 
-```python
-# [Insertar un ejemplo representativo del proyecto: diccionario de un país
-# y acceso a sus campos.]
-```
+CSV es un formato de texto tabular. La primera fila contiene los encabezados y cada fila siguiente representa un país. `csv.DictReader` permite interpretar filas como diccionarios y `csv.DictWriter` escribirlos respetando las columnas. Se abre el archivo con `newline=""` y codificación UTF-8; en la lectura se admite también la marca BOM mediante `utf-8-sig` [3].
 
-**Aplicación en el proyecto:** [Texto aquí: indicar en qué módulos se utilizan diccionarios y cómo se recorre la lista de registros.]
+La aplicación exige el orden `nombre,poblacion,superficie,continente`. Rechaza columnas incorrectas, campos faltantes o adicionales, registros duplicados y valores inválidos. Un CSV con solo el encabezado representa una lista vacía válida. Un archivo existente dañado detiene el inicio con un mensaje; no se confunde con una lista vacía que pueda reemplazarse.
 
-**Fuente:** [Texto aquí.]
+### 2.4 Validación y normalización
 
-### 2.3 Funciones y modularización
+Los textos obligatorios no pueden quedar vacíos. Población y superficie deben ser enteros positivos; los filtros admiten cero e incluyen sus extremos. Los nombres se comparan sin mayúsculas ni tildes, por lo que `japon` encuentra `Japón`. Los continentes se convierten a una escritura común: `america`, `AMÉRICA` y `América` forman el mismo grupo. Los continentes desconocidos se rechazan.
 
-[Texto aquí — responsable sugerido: Francisco Ruiz. Definir qué es una función, explicar parámetros, argumentos, valor de retorno y ámbito. Desarrollar el principio de una función = una responsabilidad y la importancia de dividir el programa en módulos con bajo acoplamiento.]
+---page---
 
-[Texto aquí: describir la organización modular del proyecto y la comunicación entre main.py y los demás archivos. Mencionar las ventajas de mantenibilidad, reutilización y prueba independiente.]
+## 3. Ordenamientos y estadísticas
 
-```python
-# [Insertar un ejemplo representativo del proyecto: definición y llamada
-# a una función que recibe la lista de países y devuelve un resultado.]
-```
+### 3.1 Ordenamiento por inserción
 
-**Aplicación en el proyecto:** [Texto aquí.]
+Ordenar reorganiza una colección según una clave y un sentido. El programa admite nombre, población o superficie; el sentido puede ser ascendente o descendente. Aunque Python ofrece `sorted()` y `list.sort()` [4], el módulo implementa inserción manual para practicar comparaciones, ciclos y desplazamientos.
 
-**Fuente:** [Texto aquí.]
+El recorrido comienza en el segundo país. Se guarda temporalmente el registro actual y se lo compara con los anteriores. Los elementos que deben quedar después se desplazan una posición, hasta encontrar el lugar donde insertar el país guardado. La parte inicial de la lista queda ordenada en cada iteración.
 
-### 2.4 Condicionales y estructuras repetitivas
+Con las poblaciones `30, 10, 20`, el primer paso produce `10, 30, 20`; el siguiente produce `10, 20, 30`. Para invertir el sentido se invierte la comparación. Los valores iguales no se desplazan entre sí, manteniendo la estabilidad del ordenamiento.
 
-[Texto aquí — responsable sugerido: Francisco Ruiz. Explicar las estructuras if, elif y else, y los bucles while y for. Relacionarlas con la navegación del menú, la validación de entradas, el recorrido de listas y la repetición de operaciones hasta que el usuario elija salir.]
+La función trabaja sobre una copia superficial y no altera el orden original. El peor caso requiere O(n²) operaciones; si la lista ya está ordenada, el recorrido es O(n). La copia ocupa O(n) memoria adicional. Con 19 países se prioriza una implementación clara; para colecciones mucho mayores sería conveniente utilizar el ordenamiento incorporado de Python.
 
-[Texto aquí: explicar por qué el menú principal utiliza un while True y cómo se evita un bucle infinito mediante la opción de salida y el manejo de errores.]
+Los nombres se comparan con `casefold()`, conservando sus tildes. Por lo tanto, el orden de texto no pretende reproducir las reglas alfabéticas de una región. Esta decisión es independiente de la búsqueda, que sí ignora tildes.
 
-```python
-# [Insertar un ejemplo representativo del proyecto: bucle del menú
-# o validación repetitiva de una entrada.]
-```
+### 3.2 Indicadores estadísticos
 
-**Aplicación en el proyecto:** [Texto aquí.]
+El máximo y el mínimo de población se obtienen recorriendo la lista. El primer registro sirve como referencia y se reemplaza cuando aparece un valor mayor o menor. En un empate se conserva el primer país encontrado.
 
-**Fuente:** [Texto aquí.]
+La media aritmética se calcula como suma de valores dividida por cantidad [5]. Se calcula por separado para población y superficie; cada país tiene el mismo peso. Los resultados pueden ser decimales aunque los datos originales sean enteros. El menú muestra dos decimales, sin redondear los valores almacenados.
 
-### 2.5 Archivos CSV
+El conteo por continente utiliza un diccionario de frecuencias: cada continente es una clave y su valor aumenta por cada país. La normalización se realiza antes de almacenar los registros, evitando grupos duplicados por diferencias de escritura.
 
-[Texto aquí — responsable sugerido: Facundo Piriz. Definir el formato CSV, explicar su estructura de filas y columnas, la importancia de la primera fila de encabezados y el uso del módulo csv de la biblioteca estándar. Mencionar las funciones reader, writer, DictReader y DictWriter.]
+Sin países, máximos, mínimos y promedios devuelven `None`; las frecuencias devuelven `{}`. Así se evita dividir por cero y se distingue la falta de datos de un resultado numérico real. Cada función estadística realiza un recorrido lineal; el conjunto de indicadores mantiene un costo O(n).
 
-[Texto aquí: explicar la persistencia de los datos, la codificación UTF-8, el tratamiento de acentos y la diferencia entre leer el archivo y mantener los datos en memoria.]
+---page---
 
-```python
-# [Insertar un ejemplo representativo del proyecto: lectura o escritura
-# de un registro en el archivo paises.csv.]
-```
+## 4. Decisiones técnicas y arquitectura
 
-**Aplicación en el proyecto:** [Texto aquí: describir el archivo paises.csv, sus columnas y el momento en que se guardan los cambios.]
+`main.py` coordina el menú y presenta resultados. `datos.py` valida registros y administra el CSV. `consultas.py` contiene búsqueda y filtros. `validaciones.py` reúne entradas interactivas, conversión de enteros y normalización. `ordenar.py` y `estadisticas.py` procesan la lista sin acceder al archivo.
 
-**Fuente:** [Texto aquí.]
+Las funciones se integran respetando sus nombres y retornos. Las consultas siempre devuelven listas; altas y actualizaciones devuelven un booleano; las estadísticas devuelven un diccionario. Esto evita adaptaciones ambiguas entre módulos.
 
-### 2.6 Ordenamientos
+### 4.1 Protección de los datos
 
-[Texto aquí — responsable sugerido: Agustín Tromba. Definir el concepto de ordenamiento, explicar el criterio y el sentido ascendente o descendente. Describir el algoritmo de inserción utilizado, sus comparaciones y desplazamientos, y su comportamiento con listas pequeñas.]
+Antes de guardar se validan todos los registros. Se escribe un archivo temporal en la misma carpeta y se reemplaza el CSV original solo al terminar correctamente. La memoria se actualiza después del guardado. Un fallo de escritura conserva tanto la lista como el archivo anterior. El sistema no está diseñado para escrituras simultáneas de varias instancias.
 
-[Texto aquí: explicar por qué se ordena sobre una copia de la lista, cómo se conserva el orden original ante empates y cómo se comparan los nombres sin distinguir mayúsculas y minúsculas.]
+La ruta del dataset se determina desde la ubicación de `datos.py`; no depende de la carpeta actual de la terminal. Un archivo faltante permite comenzar una lista nueva; uno inválido exige corregir los datos antes de continuar.
 
-```python
-# [Insertar un ejemplo representativo del proyecto: llamada a
-# ordenar_paises() con un criterio y un sentido determinados.]
-```
+### 4.2 Flujo de operaciones
 
-**Aplicación en el proyecto:** [Texto aquí.]
+![Flujo principal del sistema](documentacion/flujo.png)
 
-**Fuente:** [Texto aquí.]
+Figura 1. Inicio, lectura, validación, selección de operaciones, guardado y retorno al menú. Las consultas recorren los datos en memoria; solo altas y actualizaciones escriben el archivo.
 
-### 2.7 Estadísticas básicas
+---page---
 
-[Texto aquí — responsable sugerido: Agustín Tromba. Definir los conceptos de máximo, mínimo, promedio y frecuencia. Explicar cómo se calculan recorriendo la lista de países y cómo se interpretan los resultados en el contexto del dataset.]
+## 5. Pruebas y evidencias de ejecución
 
-[Texto aquí: describir los indicadores implementados: país con mayor y menor población, promedio de población, promedio de superficie y cantidad de países por continente. Mencionar el tratamiento de listas vacías.]
+Las pruebas usan el dataset base y archivos temporales independientes. No modifican los 19 registros de entrega. Se comprueban resultados y efectos sobre memoria y archivos, incluyendo un fallo simulado de reemplazo del CSV.
 
-```python
-# [Insertar un ejemplo representativo del proyecto: cálculo de un
-# indicador o llamada a calcular_estadisticas().]
-```
+La suite `test_sistema.py` contiene 14 pruebas. Verifica alta y actualización persistentes, normalización y duplicados, rechazo de valores inválidos, CSV malformado, conservación de datos ante fallos, búsquedas, filtros inclusivos, seis ordenamientos, estabilidad, estadísticas, listas vacías, validaciones interactivas y recorrido del menú hasta salir.
 
-**Aplicación en el proyecto:** [Texto aquí.]
+Las imágenes siguientes reproducen la salida real capturada de las funciones de consola durante ejecuciones controladas con entradas de prueba; no son maquetas de resultados esperados. Las operaciones de escritura se ejecutaron sobre una copia temporal. Se incluyen los textos originales junto a las imágenes en `documentacion`.
 
-**Fuente:** [Texto aquí.]
+![Alta y actualización](documentacion/gestion.png)
 
-### 2.8 Validación de entradas y manejo de errores
+Figura 2. Alta de Portugal y actualización de su población sobre una copia de prueba. Los cambios se volvieron a leer desde el CSV para comprobar persistencia.
 
-[Texto aquí — responsable sugerido: Francisco Ruiz. Explicar la importancia de validar los datos ingresados por el usuario y de anticipar errores. Describir el uso de try, except, ValueError, FileNotFoundError y mensajes claros. Mencionar la diferencia entre un error de formato, un error de archivo y un error de lógica.]
+![Búsqueda y filtro](documentacion/consultas.png)
 
-[Texto aquí: explicar cómo el menú principal permanece activo ante una entrada inválida y cómo se evitan campos vacíos, valores negativos y opciones fuera de rango.]
+Figura 3. Búsqueda exacta de `japon` y filtro de población entre cero y cinco millones: Japón y Uruguay, respectivamente.
 
-```python
-# [Insertar un ejemplo representativo del proyecto: bloque try-except
-# con un mensaje amigable para el usuario.]
-```
+---page---
 
-**Aplicación en el proyecto:** [Texto aquí.]
+### 5.1 Ordenamiento, estadísticas y errores
 
-**Fuente:** [Texto aquí.]
+![Ordenamiento y estadísticas](documentacion/indicadores.png)
 
-### 2.9 Síntesis de los conceptos aplicados
+Figura 4. Ordenamiento descendente de una selección y estadísticas del dataset base completo. China tiene la mayor población y Uruguay la menor. Los promedios se muestran con dos decimales.
 
-| Concepto | Definición breve | Aplicación en el proyecto | Módulo principal | Fuente |
-|---|---|---|---|---|
-| Listas | [Texto aquí] | [Texto aquí] | [datos.py / main.py] | [Fuente] |
-| Diccionarios | [Texto aquí] | [Texto aquí] | [datos.py] | [Fuente] |
-| Funciones | [Texto aquí] | [Texto aquí] | [Todos los módulos] | [Fuente] |
-| Condicionales | [Texto aquí] | [Texto aquí] | [main.py / validaciones.py] | [Fuente] |
-| Bucles | [Texto aquí] | [Texto aquí] | [main.py / datos.py] | [Fuente] |
-| Archivos CSV | [Texto aquí] | [Texto aquí] | [datos.py] | [Fuente] |
-| Ordenamientos | [Texto aquí] | [Texto aquí] | [ordenar.py] | [Fuente] |
-| Estadísticas | [Texto aquí] | [Texto aquí] | [estadisticas.py] | [Fuente] |
-| Excepciones | [Texto aquí] | [Texto aquí] | [datos.py / main.py] | [Fuente] |
+![Validaciones y pruebas](documentacion/pruebas.png)
 
-<div style="page-break-after: always;"></div>
+Figura 5. Rechazo de una entrada no numérica, un valor negativo y un decimal antes de aceptar un entero. Resumen de la suite de pruebas ejecutada.
 
-## 3. Decisiones Técnicas y Arquitectura
+También se verificó que un CSV inválido impida continuar sin sobrescribirlo y que una lista vacía produzca mensajes informativos. La suite puede repetirse con el comando documentado en el README.
 
-### 3.1 Arquitectura modular del sistema
+---page---
 
-[Texto aquí: explicar la decisión de dividir la aplicación en módulos con responsabilidades bien definidas. Mencionar las ventajas: legibilidad, mantenimiento, pruebas independientes, trabajo paralelo del equipo y bajo acoplamiento. Indicar que main.py actúa como integrador y que los módulos de lógica no se encargan de la presentación por consola.]
+## 6. Resultados, dificultades y conclusiones
 
-```text
-tpi-programacion-i-utn/
-├── main.py              # Punto de entrada, menú e integración
-├── datos.py             # Lectura/escritura del CSV, alta y actualización
-├── consultas.py         # Búsqueda y filtros
-├── validaciones.py      # Validación de entradas del usuario
-├── ordenar.py           # Ordenamiento por nombre, población y superficie
-├── estadisticas.py      # Cálculo de indicadores
-├── paises.csv           # Dataset base
-├── Informe_TPI.pdf      # Documento académico final
-├── Informe_TPI.md       # Fuente editable del informe
-└── README.md            # Documentación del repositorio
-```
+### 6.1 Resultados con el dataset base
 
-| Archivo | Responsabilidad | Funciones principales | Integrante |
-|---|---|---|---|
-| `main.py` | Punto de entrada, menú, navegación, mensajes y unión de los módulos | `main()`, `mostrar_menu()`, `ejecutar_opcion()` | Fausto Rivero |
-| `datos.py` | Lectura y escritura del CSV; alta y actualización de países | `leer_paises()`, `guardar_paises()`, `agregar_pais()`, `actualizar_pais()` | Facundo Piriz |
-| `consultas.py` | Búsqueda por nombre y filtros por continente y rangos | `buscar_pais()`, `filtrar_paises()` | Francisco Ruiz |
-| `validaciones.py` | Validación transversal de entradas y opciones de menú | `pedir_entero()`, `pedir_cadena()`, `validar_opcion()` | Francisco Ruiz |
-| `ordenar.py` | Ordenamiento ascendente y descendente por tres criterios | `ordenar_paises()` | Agustín Tromba |
-| `estadisticas.py` | Cálculo de extremos, promedios y conteos por continente | `calcular_estadisticas()` | Agustín Tromba |
-| `paises.csv` | Dataset persistente con los registros de países | — | Facundo Piriz |
+El dataset contiene 19 países: América 6, Europa 4, Asia 4, África 3 y Oceanía 2. La población máxima corresponde a China con 1.412.000.000 habitantes y la mínima a Uruguay con 3.426.260. El promedio de población es 229.983.424,21 habitantes y el de superficie es 2.642.743,79 km². Estos valores dependen exclusivamente del CSV incluido.
 
-### 3.2 Modelo de datos del dominio
+Las verificaciones cubren las operaciones mínimas solicitadas: alta, actualización, búsqueda parcial y exacta, filtros por continente y rangos, ordenamientos en ambos sentidos y estadísticas. Las entradas inválidas se informan mediante mensajes y no se guardan.
 
-[Texto aquí: explicar que cada país se representa mediante un diccionario y que el conjunto de países se almacena en una lista. Justificar por qué esta estructura facilita el recorrido, la búsqueda, el filtrado y el ordenamiento.]
+### 6.2 Dificultades técnicas y soluciones
 
-| Campo | Tipo de dato | Descripción | Validación aplicada |
-|---|---|---|---|
-| `nombre` | `str` | Nombre del país | No vacío; sin duplicados |
-| `poblacion` | `int` | Cantidad de habitantes | Entero positivo |
-| `superficie` | `int` | Superficie en km² | Entero positivo |
-| `continente` | `str` | Continente al que pertenece | No vacío |
+La primera dificultad de integración fue la diferencia entre los nombres de funciones importados por el menú y los definidos en consultas y validaciones. Esto impedía iniciar el programa. Se ajustaron las importaciones y llamadas y se añadió una prueba que recorre el menú completo.
 
-**Ejemplo de registro:**
+Otra dificultad fue la escritura variable de los continentes: cambiar solo las mayúsculas no unificaba `America` y `América`. Se centralizó la normalización y se utiliza tanto en carga como en alta y guardado. La prueba comprueba que un país agregado con `america` incremente el grupo América.
 
-```python
-{
-    "nombre": "Argentina",
-    "poblacion": 45376763,
-    "superficie": 2780400,
-    "continente": "América",
-}
-```
+La lectura de un archivo dañado podía confundirse con la ausencia de países. Se separaron ambos estados: un archivo inválido produce un error y detiene el inicio; un CSV válido con encabezado y sin filas produce una lista vacía. También se evitó reemplazar el original antes de terminar la escritura, y se comprobó que un fallo mantenga los datos anteriores.
 
-### 3.3 Flujo principal del sistema
+### 6.3 Conclusiones
 
-[Texto aquí: describir el flujo general. El programa inicia, carga el CSV, valida los datos, muestra el menú principal y espera una opción. Según la opción elegida, ejecuta la operación correspondiente, muestra el resultado, realiza una pausa y vuelve al menú. El ciclo termina cuando el usuario selecciona la opción Salir.]
+El proyecto muestra cómo conectar estructuras básicas de Python en una aplicación completa. La lista de diccionarios facilita el recorrido y mantiene juntos los atributos de cada país. La división en funciones permite razonar sobre cada operación y comprobar sus resultados de forma independiente.
 
-> **[Insertar aquí el diagrama de flujo de las operaciones principales]**
->
-> *Figura 1. Flujo general del sistema: carga del CSV, menú, operaciones y persistencia.*
->
-> Sugerencia para el diagrama: incluir un rombo de decisión para "¿Opción válida?", otro para "¿País encontrado?" y una rama de error que regrese al menú sin finalizar el programa.
+La integración demostró que contar con módulos terminados no alcanza: deben coincidir los nombres, parámetros, tipos y responsabilidades. Las pruebas del menú y de persistencia permiten detectar fallas que no aparecen al revisar una función aislada. La validación y la normalización también forman parte de la corrección de los resultados, especialmente al agrupar estadísticas.
 
-**Flujo resumido:**
+El sistema tiene un alcance deliberadamente acotado: consola, un archivo CSV y ejecución local. Como mejoras futuras pueden considerarse más indicadores, exportación de consultas y almacenamiento en una base de datos si aumenta el volumen o aparece la necesidad de usuarios simultáneos. Esas mejoras no son necesarias para las funcionalidades requeridas en este trabajo.
 
-1. Inicio.
-2. Cargar `paises.csv` y construir la lista de diccionarios.
-3. Mostrar el menú principal.
-4. Leer y validar la opción ingresada.
-5. Ejecutar la operación seleccionada (agregar, actualizar, buscar, filtrar, ordenar o estadísticas).
-6. Mostrar el resultado y pausar.
-7. Volver al paso 3 mientras la opción no sea Salir.
-8. Guardar los cambios cuando corresponda y finalizar.
+---page---
 
-### 3.4 Decisiones de diseño
+## 7. Bibliografía, enlaces y entrega
 
-[Texto aquí: desarrollar cada decisión y justificarla. Se sugieren los siguientes ejes:]
+### 7.1 Fuentes consultadas
 
-- **Lista de diccionarios:** [Texto aquí: justificar frente a listas paralelas, tuplas u objetos.]
-- **Persistencia en CSV:** [Texto aquí: justificar frente a JSON, base de datos o archivo de texto plano.]
-- **Separación entre lógica y presentación:** [Texto aquí: los módulos calculan y devuelven datos; main.py muestra y pide entradas.]
-- **Validaciones centralizadas:** [Texto aquí: reutilización de funciones y mensajes uniformes.]
-- **Retorno booleano en altas y actualizaciones:** [Texto aquí: permite que el menú informe éxito o error sin duplicar la lógica.]
-- **Codificación UTF-8:** [Texto aquí: asegurar acentos y caracteres especiales en el CSV y en la consola.]
-- **Limpieza de consola multiplataforma:** [Texto aquí: uso de `cls` en Windows y `clear` en Linux/macOS.]
-- **Manejo de errores con try-except:** [Texto aquí: evitar que una entrada inválida finalice el programa.]
-- **Ordenamiento sobre una copia:** [Texto aquí: preservar el orden original de la lista en memoria.]
+[1] Python Software Foundation. Estructuras de datos. Documentación oficial de Python. https://docs.python.org/es/3/tutorial/datastructures.html
 
-### 3.5 Interfaz de consola y experiencia de usuario
+[2] Python Software Foundation. Más herramientas para control de flujo. Documentación oficial de Python. https://docs.python.org/es/3/tutorial/controlflow.html
 
-[Texto aquí: describir el menú principal, los submenús de filtros y ordenamiento, el formato de los mensajes, la separación visual con líneas, la pausa con Enter y el formateo de números con separadores de miles. Explicar cómo se guía al usuario ante un error y cómo se evita que la pantalla quede saturada.]
+[3] Python Software Foundation. csv: lectura y escritura de archivos CSV. Documentación oficial de Python. https://docs.python.org/es/3/library/csv.html
 
-| Elemento | Decisión adoptada | Beneficio |
-|---|---|---|
-| Menú principal | [Texto aquí] | [Texto aquí] |
-| Submenús | [Texto aquí] | [Texto aquí] |
-| Mensajes de éxito | [Texto aquí] | [Texto aquí] |
-| Mensajes de error | [Texto aquí] | [Texto aquí] |
-| Pausas | [Texto aquí] | [Texto aquí] |
-| Limpieza de pantalla | [Texto aquí] | [Texto aquí] |
-| Formato numérico | [Texto aquí] | [Texto aquí] |
+[4] Python Software Foundation. Sorting Techniques. Documentación oficial de Python. https://docs.python.org/es/3/howto/sorting.html
 
-<div style="page-break-after: always;"></div>
+[5] Python Software Foundation. statistics: funciones de estadística matemática. Documentación oficial de Python. https://docs.python.org/es/3/library/statistics.html
 
-### 3.6 Pruebas y capturas de ejecución
+Universidad Tecnológica Nacional. Consigna del Trabajo Práctico Integrador de Programación 1: Gestión de Datos de Países en Python. Documento provisto por la cátedra.
 
-[Texto aquí: describir el plan de pruebas. Indicar que se utilizó el dataset base de `paises.csv` y que se probaron tanto casos exitosos como entradas inválidas. Mencionar que las pruebas se ejecutaron desde la carpeta raíz del proyecto con `python main.py`.]
+Consulta de documentación web: 15 de noviembre de 2026. Las referencias respaldan los conceptos utilizados; los datos del CSV se presentan como un conjunto académico de prueba.
 
-**Tabla de casos de prueba**
+### 7.2 Acceso al proyecto
 
-| N° | Caso de prueba | Entrada | Resultado esperado | Resultado obtenido | Estado |
-|---|---|---|---|---|---|
-| 1 | Alta de un país válido | [Nombre, población, superficie y continente] | [El país se agrega y se guarda en el CSV] | [Texto aquí] | [OK / Falló] |
-| 2 | Alta con campos vacíos | [Cadena vacía] | [Mensaje de error; no se guarda] | [Texto aquí] | [OK / Falló] |
-| 3 | Alta con población negativa | [-100] | [Mensaje de error; no se guarda] | [Texto aquí] | [OK / Falló] |
-| 4 | Actualización válida | [País existente y nuevos valores] | [Datos actualizados en el CSV] | [Texto aquí] | [OK / Falló] |
-| 5 | Actualización de país inexistente | [Nombre no registrado] | [Mensaje de error; sin cambios] | [Texto aquí] | [OK / Falló] |
-| 6 | Búsqueda parcial | [Parte del nombre] | [Lista de coincidencias] | [Texto aquí] | [OK / Falló] |
-| 7 | Búsqueda sin resultados | [Nombre inexistente] | [Mensaje informativo] | [Texto aquí] | [OK / Falló] |
-| 8 | Filtro por continente | [Continente] | [Países del continente] | [Texto aquí] | [OK / Falló] |
-| 9 | Filtro por rango de población | [Mínimo y máximo] | [Países dentro del rango] | [Texto aquí] | [OK / Falló] |
-| 10 | Filtro por rango de superficie | [Mínimo y máximo] | [Países dentro del rango] | [Texto aquí] | [OK / Falló] |
-| 11 | Ordenamiento ascendente | [Criterio] | [Lista de menor a mayor] | [Texto aquí] | [OK / Falló] |
-| 12 | Ordenamiento descendente | [Criterio] | [Lista de mayor a menor] | [Texto aquí] | [OK / Falló] |
-| 13 | Estadísticas con datos | [Dataset cargado] | [Extremos, promedios y conteos] | [Texto aquí] | [OK / Falló] |
-| 14 | Estadísticas sin datos | [Lista vacía] | [Mensaje informativo] | [Texto aquí] | [OK / Falló] |
-| 15 | Opción de menú inválida | [Número fuera de rango o texto] | [Mensaje de error; el menú continúa] | [Texto aquí] | [OK / Falló] |
+Repositorio: https://github.com/aqussti/tpi-programacion-i-utn
 
-#### 3.6.1 Menú principal
+Informe PDF: https://github.com/aqussti/tpi-programacion-i-utn/blob/main/Informe_TPI.pdf
 
-> **[Insertar captura de pantalla: menú principal]**
->
-> *Figura 2. Menú principal del sistema con las siete opciones disponibles.*
+Video demostrativo: pendiente de grabación y publicación por el grupo. Se incluye `Guion_video.md` con un recorrido de aproximadamente doce minutos, distribuido entre los cuatro integrantes. Antes de entregar, incorporar aquí y en el README el enlace con acceso sin iniciar sesión.
 
-[Texto aquí: comentar brevemente qué muestra la captura y cómo se interpreta.]
+### 7.3 Contenido de la entrega
 
-#### 3.6.2 Alta de un país
+El paquete contiene los seis módulos del programa, el dataset, el README, las pruebas, este informe en PDF y Markdown, el diagrama y las salidas capturadas. La carpeta de aportes conserva los textos individuales como material de respaldo.
 
-> **[Insertar captura de pantalla: alta de país]**
->
-> *Figura 3. Ingreso de los datos de un país y confirmación del alta.*
-
-[Texto aquí: indicar los datos utilizados en la prueba y el mensaje obtenido.]
-
-#### 3.6.3 Actualización de datos
-
-> **[Insertar captura de pantalla: actualización de población y superficie]**
->
-> *Figura 4. Actualización de los datos de un país existente.*
-
-[Texto aquí: indicar el país actualizado, los valores anteriores y los nuevos.]
-
-#### 3.6.4 Búsqueda por nombre
-
-> **[Insertar captura de pantalla: búsqueda por nombre]**
->
-> *Figura 5. Resultados de una búsqueda parcial por nombre.*
-
-[Texto aquí: comentar la coincidencia parcial y el formato de los resultados.]
-
-#### 3.6.5 Filtro por continente
-
-> **[Insertar captura de pantalla: filtro por continente]**
->
-> *Figura 6. Listado de países filtrado por continente.*
-
-[Texto aquí: indicar el continente elegido y la cantidad de resultados.]
-
-#### 3.6.6 Filtro por rango de población o superficie
-
-> **[Insertar captura de pantalla: filtro por rango]**
->
-> *Figura 7. Filtro por rango de población o de superficie.*
-
-[Texto aquí: indicar los límites utilizados y los países que cumplen la condición.]
-
-#### 3.6.7 Ordenamiento
-
-> **[Insertar captura de pantalla: ordenamiento]**
->
-> *Figura 8. Listado ordenado por el criterio y el sentido seleccionados.*
-
-[Texto aquí: comparar el orden obtenido con el esperado.]
-
-#### 3.6.8 Estadísticas
-
-> **[Insertar captura de pantalla: estadísticas]**
->
-> *Figura 9. Indicadores estadísticos calculados sobre el dataset.*
-
-[Texto aquí: comentar los extremos, los promedios y la distribución por continente.]
-
-#### 3.6.9 Manejo de errores
-
-> **[Insertar captura de pantalla: entrada inválida]**
->
-> *Figura 10. Mensaje de error ante una entrada inválida sin interrumpir el menú.*
-
-[Texto aquí: describir el caso probado y confirmar que el programa continuó funcionando.]
-
-### 3.7 Trazabilidad de requisitos
-
-[Texto aquí: explicar que la siguiente matriz permite verificar que cada requisito de la consigna fue implementado y probado.]
-
-| Requisito de la consigna | Implementación | Evidencia |
-|---|---|---|
-| Agregar un país sin campos vacíos | [Texto aquí] | [Figura / caso de prueba] |
-| Actualizar población y superficie | [Texto aquí] | [Figura / caso de prueba] |
-| Buscar por nombre (parcial o exacta) | [Texto aquí] | [Figura / caso de prueba] |
-| Filtrar por continente | [Texto aquí] | [Figura / caso de prueba] |
-| Filtrar por rango de población | [Texto aquí] | [Figura / caso de prueba] |
-| Filtrar por rango de superficie | [Texto aquí] | [Figura / caso de prueba] |
-| Ordenar por nombre, población y superficie | [Texto aquí] | [Figura / caso de prueba] |
-| Ordenar en forma ascendente y descendente | [Texto aquí] | [Figura / caso de prueba] |
-| Mostrar estadísticas | [Texto aquí] | [Figura / caso de prueba] |
-| Controlar errores de formato del CSV | [Texto aquí] | [Caso de prueba] |
-| Evitar fallos ante entradas inválidas | [Texto aquí] | [Caso de prueba] |
-| Mensajes claros de éxito y error | [Texto aquí] | [Figuras] |
-| README con descripción y enlaces | [Texto aquí] | [Enlace al repositorio] |
-| Informe PDF con carátula, índice y bibliografía | [Texto aquí] | [Este documento] |
-| Video demostrativo público | [Texto aquí] | [Enlace al video] |
-
-### 3.8 Limitaciones y mejoras futuras
-
-[Texto aquí: reconocer las limitaciones del desarrollo actual. Se sugieren: aplicación de consola, persistencia en un único archivo CSV, ausencia de concurrencia, dependencia de la codificación del sistema, falta de pruebas automatizadas y ausencia de interfaz gráfica.]
-
-**Mejoras posibles:**
-
-- [Incorporar una interfaz gráfica o web.]
-- [Migrar la persistencia a SQLite u otra base de datos.]
-- [Agregar pruebas automatizadas con unittest o pytest.]
-- [Incorporar más indicadores estadísticos y gráficos.]
-- [Implementar exportación de reportes a PDF o CSV.]
-- [Agregar autenticación y control de usuarios, si el sistema creciera.]
-
-<div style="page-break-after: always;"></div>
-
-## 4. Dificultades y Conclusiones
-
-### 4.1 Dificultades técnicas
-
-[Texto aquí: introducir las principales dificultades técnicas encontradas durante el desarrollo. No limitarse a enumerarlas: explicar por qué fueron desafiantes y cómo se resolvieron.]
-
-| Dificultad | Impacto en el proyecto | Solución adoptada | Aprendizaje |
-|---|---|---|---|
-| [Integración de módulos con interfaces distintas] | [Texto aquí] | [Texto aquí] | [Texto aquí] |
-| [Manejo de acentos y codificación del CSV] | [Texto aquí] | [Texto aquí] | [Texto aquí] |
-| [Validación de entradas sin romper el menú] | [Texto aquí] | [Texto aquí] | [Texto aquí] |
-| [Coordinación de cambios en GitHub] | [Texto aquí] | [Texto aquí] | [Texto aquí] |
-| [Pruebas de casos límite] | [Texto aquí] | [Texto aquí] | [Texto aquí] |
-| [Organización del tiempo para la entrega] | [Texto aquí] | [Texto aquí] | [Texto aquí] |
-
-### 4.2 Dificultades de organización del equipo
-
-[Texto aquí: describir los desafíos de coordinar un equipo de cuatro integrantes con responsabilidades distribuidas. Mencionar horarios, comunicación, definición de contratos entre módulos, revisión de cambios y unificación de criterios.]
-
-### 4.3 Estrategias de resolución
-
-[Texto aquí: explicar las estrategias utilizadas: reuniones de avance, definición temprana de interfaces, ramas de Git, revisión cruzada, pruebas de integración, documentación compartida y acuerdos de estilo de código.]
-
-### 4.4 Conclusiones grupales
-
-[Texto aquí: redactar entre tres y cinco párrafos. Se sugieren los siguientes ejes:]
-
-- [Qué aprendió el grupo sobre la modularización y la importancia de definir interfaces claras.]
-- [Cómo influyó la validación de datos en la estabilidad del programa.]
-- [Qué aportó el trabajo con archivos CSV y estructuras de datos.]
-- [Cómo se organizó el equipo y qué se podría mejorar en una próxima entrega.]
-- [Valoración general del resultado y de los aprendizajes alcanzados.]
-
-### 4.5 Aprendizajes individuales
-
-| Integrante | Aprendizajes principales | Aporte central al proyecto |
-|---|---|---|
-| Facundo Piriz | [Texto aquí] | [Datos, CSV y documentación teórica] |
-| Francisco Ruiz | [Texto aquí] | [Consultas, validaciones y diagrama de flujo] |
-| Agustín Tromba | [Texto aquí] | [Ordenamientos, estadísticas y repositorio] |
-| Fausto Rivero | [Texto aquí] | [Integración, menú, informe final y video] |
-
-### 4.6 Reflexión final
-
-[Texto aquí: cerrar el apartado con una reflexión grupal sobre el proceso de aprendizaje, el valor del trabajo colaborativo y la proyección de los conocimientos adquiridos.]
-
-<div style="page-break-after: always;"></div>
-
-## 5. Enlaces del Proyecto
-
-### 5.1 Repositorio de GitHub
-
-**URL:** https://github.com/aqussti/tpi-programacion-i-utn
-
-[Texto aquí: indicar que el repositorio contiene el código fuente completo, el archivo `paises.csv`, el `README.md` y el informe en PDF. Verificar que el acceso sea público y que la rama principal sea `main`.]
-
-### 5.2 Video demostrativo
-
-**URL:** [Pegar aquí el enlace público de YouTube]
-
-[Texto aquí: indicar la duración del video, los temas abordados y la participación de cada integrante. El video debe tener entre 10 y 15 minutos, mostrar el sistema en funcionamiento y explicar la estructura de datos utilizada. La configuración de privacidad debe ser "Público"; la opción "No listado" no cumple con el requisito de acceso público.]
-
-**Checklist del video:**
-
-- [ ] Duración entre 10 y 15 minutos.
-- [ ] Permisos de visualización públicos.
-- [ ] Presentación del problema y de los objetivos.
-- [ ] Explicación de la estructura de datos (lista de diccionarios).
-- [ ] Demostración de todas las funcionalidades.
-- [ ] Demostración de casos de error y validaciones.
-- [ ] Participación equitativa de los cuatro integrantes.
-- [ ] Cierre con conclusiones y aprendizajes.
-
-### 5.3 Documento PDF
-
-**URL / ubicación:** [Enlace al PDF o indicar que se encuentra en la raíz del repositorio]
-
-[Texto aquí: indicar si el PDF está subido al repositorio o enlazado desde el README. Verificar que el enlace sea accesible sin iniciar sesión.]
-
-### 5.4 Verificación de enlaces
-
-| Recurso | URL | Estado |
-|---|---|---|
-| Repositorio GitHub | https://github.com/aqussti/tpi-programacion-i-utn | [Verificado / Pendiente] |
-| Video YouTube | [Pegar enlace] | [Verificado / Pendiente] |
-| Informe PDF | [Pegar enlace] | [Verificado / Pendiente] |
-
-<div style="page-break-after: always;"></div>
-
-## 6. Bibliografía y Webgrafía
-
-[Texto aquí: ordenar las referencias alfabéticamente y utilizar un estilo uniforme, preferentemente APA 7.ª edición. Agregar las fuentes consultadas por cada integrante y verificar que todas las citas del marco teórico tengan su referencia correspondiente.]
-
-### 6.1 Bibliografía
-
-Las siguientes obras se incluyen como apoyo bibliográfico: conservar únicamente las que hayan sido efectivamente consultadas por el equipo.
-
-Cátedra de Programación 1. ([Año]). *Consigna del Trabajo Práctico Integrador: Gestión de Datos de Países en Python*. Universidad Tecnológica Nacional.
-
-Downey, A. B. (2015). *Think Python: How to Think Like a Computer Scientist* (2.ª ed.). O'Reilly Media.
-
-Lutz, M. (2013). *Learning Python* (5.ª ed.). O'Reilly Media.
-
-Matthes, E. (2023). *Python Crash Course: A Hands-On, Project-Based Introduction to Programming* (3.ª ed.). No Starch Press.
-
-Sweigart, A. (2019). *Automate the Boring Stuff with Python: Practical Programming for Total Beginners* (2.ª ed.). No Starch Press.
-
-[Agregar aquí otros libros, apuntes de cátedra o materiales utilizados por el equipo.]
-
-### 6.2 Webgrafía
-
-Python Software Foundation. (s. f.). *The Python Tutorial*. Recuperado el [Fecha de consulta], de https://docs.python.org/es/3/tutorial/
-
-Python Software Foundation. (s. f.). *Data Structures*. Recuperado el [Fecha de consulta], de https://docs.python.org/es/3/tutorial/datastructures.html
-
-Python Software Foundation. (s. f.). *Defining Functions*. Recuperado el [Fecha de consulta], de https://docs.python.org/es/3/tutorial/controlflow.html#defining-functions
-
-Python Software Foundation. (s. f.). *csv — CSV File Reading and Writing*. Recuperado el [Fecha de consulta], de https://docs.python.org/es/3/library/csv.html
-
-Python Software Foundation. (s. f.). *Sorting Techniques*. Recuperado el [Fecha de consulta], de https://docs.python.org/es/3/howto/sorting.html
-
-Python Software Foundation. (s. f.). *statistics — Mathematical statistics functions*. Recuperado el [Fecha de consulta], de https://docs.python.org/es/3/library/statistics.html
-
-Python Software Foundation. (s. f.). *Errors and Exceptions*. Recuperado el [Fecha de consulta], de https://docs.python.org/es/3/tutorial/errors.html
-
-Python Software Foundation. (s. f.). *os — Miscellaneous operating system interfaces*. Recuperado el [Fecha de consulta], de https://docs.python.org/es/3/library/os.html
-
-[Agregar aquí las demás fuentes web consultadas, incluyendo tutoriales, artículos o documentación complementaria.]
-
-### 6.3 Nota sobre el uso de fuentes
-
-[Texto aquí: aclarar que las fuentes fueron utilizadas con fines académicos y que el código fue desarrollado por el equipo. Si se utilizaron fragmentos de código o ideas de terceros, indicar la fuente correspondiente.]
-
-<div style="page-break-after: always;"></div>
-
-## Anexos
-
-### Anexo A. Instructivo de instalación y ejecución
-
-**Requisitos previos**
-
-- Python 3.8 o superior.
-- No se requieren librerías externas: se utiliza únicamente la biblioteca estándar.
-
-**Pasos para ejecutar**
-
-1. Clonar el repositorio:
-   ```bash
-   git clone https://github.com/aqussti/tpi-programacion-i-utn.git
-   ```
-2. Ingresar a la carpeta del proyecto:
-   ```bash
-   cd tpi-programacion-i-utn
-   ```
-3. Ejecutar el programa:
-   ```bash
-   python main.py
-   ```
-   En Linux o macOS puede ser necesario usar `python3 main.py`.
-
-**Formato del archivo `paises.csv`**
-
-```csv
-nombre,poblacion,superficie,continente
-Argentina,45376763,2780400,América
-Japón,125800000,377975,Asia
-Brasil,213993437,8515767,América
-Alemania,83149300,357022,Europa
-```
-
-[Texto aquí: indicar que el archivo debe estar en la misma carpeta que `main.py`, que la primera fila contiene los encabezados y que los valores de población y superficie deben ser enteros positivos.]
-
-### Anexo B. Participación de los integrantes
-
-| Integrante | Rol principal | Módulos / tareas | Documentación | Video |
-|---|---|---|---|---|
-| Facundo Piriz | [Datos y gestión] | [datos.py, paises.csv] | [Listas, diccionarios y CSV] | [Participación] |
-| Francisco Ruiz | [Consultas y validaciones] | [consultas.py, validaciones.py] | [Condicionales, funciones y diagrama] | [Participación] |
-| Agustín Tromba | [Ordenamiento y estadísticas] | [ordenar.py, estadisticas.py] | [Ordenamientos y estadísticas] | [Participación] |
-| Fausto Rivero | [Integración y cierre] | [main.py, informe y video] | [Introducción, arquitectura y conclusiones] | [Participación] |
-
-### Anexo C. Glosario
-
-| Término | Definición |
-|---|---|
-| Lista | Colección ordenada y mutable de elementos. |
-| Diccionario | Estructura que almacena pares clave-valor. |
-| Función | Bloque de código reutilizable que recibe datos y devuelve un resultado. |
-| Parámetro | Variable declarada en la definición de una función. |
-| Argumento | Valor concreto que se pasa a una función al llamarla. |
-| CSV | Formato de texto plano con valores separados por comas. |
-| Iteración | Repetición de un bloque de código mediante un bucle. |
-| Excepción | Error detectado durante la ejecución que puede capturarse con try-except. |
-| Ordenamiento | Organización de los elementos según un criterio. |
-| Promedio | Suma de los valores dividida por la cantidad de elementos. |
-
----
-
-**Fin del documento.**
-
-
-
-
-
+El cierre de la entrega requiere grabar el video, comprobar su acceso público, actualizar sus enlaces y regenerar el ZIP con esa versión definitiva.
