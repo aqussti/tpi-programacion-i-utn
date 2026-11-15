@@ -54,7 +54,7 @@ def leer_paises(ruta=ARCHIVO_CSV):
                     "nombre": fila["nombre"].strip(),
                     "poblacion": poblacion,
                     "superficie": superficie,
-                    "continente": fila["continente"].strip()
+                    "continente": fila["continente"].strip().capitalize()
                 }
 
                 paises.append(pais)
@@ -101,7 +101,7 @@ def agregar_pais(paises, nombre, poblacion, superficie, continente):
     """
 
     nombre = nombre.strip()
-    continente = continente.strip()
+    continente = continente.strip().capitalize()
 
     if not nombre or not continente:
         print("Error: el nombre y el continente son obligatorios.")
