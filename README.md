@@ -1,6 +1,6 @@
 # Gestión de Datos de Países en Python
 
-Trabajo Práctico Integrador de Programación 1 - UTN. Tecnicatura Universitaria en Programación a Distancia, comisión 4. Entrega: 16/11/2026.
+Trabajo Práctico Integrador de Programación 1 - UTN. Tecnicatura Universitaria en Programación, comisión 4. Entrega: 16/11/2026.
 
 Aplicación de consola para administrar un CSV de países mediante listas, diccionarios, funciones, búsquedas, filtros, ordenamiento por inserción y estadísticas.
 
