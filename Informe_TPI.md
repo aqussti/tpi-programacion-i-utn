@@ -378,7 +378,7 @@ Cada país se representa mediante un diccionario con cuatro claves: `nombre`, `p
 }
 ```
 
-`datos.leer_paises()` lee el archivo con `csv.DictReader`, verifica que las columnas sean exactamente `nombre`, `poblacion`, `superficie` y `continente`, convierte los valores numéricos a `int` y rechaza filas incompletas o con valores no positivos. `datos.agregar_pais()` y `datos.actualizar_pais()` aplican las mismas reglas antes de guardar. De este modo, las funciones de consulta, ordenamiento y estadísticas pueden suponer que los registros ya están validados.
+`datos.leer_paises()` lee el archivo con `csv.DictReader`, verifica que las columnas sean exactamente `nombre`, `poblacion`, `superficie` y `continente`, convierte los valores numéricos a `int` y rechaza filas incompletas o con valores no positivos. Además, normaliza el continente con `capitalize()` y convierte el valor `America` en `América` al leer, guardar y agregar, para conservar la tilde del dataset. `datos.agregar_pais()` y `datos.actualizar_pais()` aplican las mismas reglas antes de guardar. De este modo, las funciones de consulta, ordenamiento y estadísticas pueden suponer que los registros ya están validados.
 
 ### 3.3 Flujo principal del sistema
 
@@ -425,7 +425,7 @@ El bucle principal es un `while True` que solo se interrumpe con la opción Sali
 
 - **Ordenamiento sobre una copia:** `ordenar_paises()` trabaja con `paises.copy()` y aplica ordenamiento por inserción. No modifica la lista original ni los diccionarios; así el orden del dataset se mantiene estable entre operaciones y el usuario puede ordenar varias veces con criterios distintos sin alterar la fuente.
 
-- **Unificación de continentes:** en el alta, `main.normalizar_continente()` compara el texto ingresado con los continentes existentes usando `normalizar()`. Si coincide, reutiliza el nombre canónico (`América` en lugar de `America`); si es nuevo, lo capitaliza. Esto evita duplicados por mayúsculas o tildes y complementa la normalización que ya realiza `datos.py`.
+- **Unificación de continentes:** en el alta, `main.normalizar_continente()` compara el texto ingresado con los continentes existentes usando `normalizar()`. Si coincide, reutiliza el nombre canónico (`América` en lugar de `America`); si es nuevo, lo capitaliza. Esto evita duplicados por mayúsculas o tildes y complementa la normalización que ya realiza `datos.py`, que también convierte `America` en `América` al leer, guardar y agregar.
 
 - **Búsqueda exacta y parcial:** `buscar_por_nombre()` recibe `exacta=False` por defecto. La opción de búsqueda usa coincidencia parcial para mostrar varias alternativas; la actualización usa `exacta=True` para evitar modificar un país equivocado. Si no hay coincidencia exacta, se muestran las parciales como ayuda.
 
