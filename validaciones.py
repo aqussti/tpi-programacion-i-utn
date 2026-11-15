@@ -1,3 +1,4 @@
+
 """
 validaciones.py
 Funciones reutilizables para validar entradas del usuario.
@@ -12,6 +13,27 @@ def normalizar_texto(texto):
     """Normaliza espacios, mayúsculas y tildes para comparar nombres."""
     texto = unicodedata.normalize("NFD", texto.strip().casefold())
     return "".join(c for c in texto if unicodedata.category(c) != "Mn")
+
+
+def validar_nombre_pais(nombre):
+    """Comprueba que el nombre contenga letras, espacios, guiones o apóstrofes."""
+    if not isinstance(nombre, str) or not nombre.strip():
+        raise ValueError("El nombre del país es obligatorio.")
+
+    nombre = nombre.strip()
+
+    if not all(
+        unicodedata.category(c).startswith("L")
+        or c.isspace()
+        or c in "-'’"
+        for c in nombre
+    ):
+        raise ValueError("El nombre del país solo puede contener letras, espacios y guiones.")
+
+    if not any(unicodedata.category(c).startswith("L") for c in nombre):
+        raise ValueError("El nombre debe contener al menos una letra.")
+
+    return nombre.title()
 
 
 def normalizar_continente(texto):
@@ -42,10 +64,11 @@ def entero_positivo(valor):
 def pedir_texto_no_vacio(mensaje):
     """Pide un texto por consola hasta que no esté vacío. Devuelve el texto sin espacios sobrantes."""
     while True:
-        texto = input(mensaje).strip()
-        if texto:
+        try:
+            texto = validar_nombre_pais(input(mensaje))
             return texto
-        print("Error: el campo no puede estar vacío.")
+        except ValueError as error:
+            print(f"Error: {error}")
 
 
 def pedir_entero_positivo(mensaje, permitir_cero=False):

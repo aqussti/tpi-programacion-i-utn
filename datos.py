@@ -1,9 +1,10 @@
+
 """Lectura, escritura y actualización del dataset de países."""
 import csv
 import os
 import tempfile
 from pathlib import Path
-from validaciones import entero_positivo, normalizar_continente, normalizar_texto
+from validaciones import entero_positivo, normalizar_continente, normalizar_texto, validar_nombre_pais
 
 ARCHIVO_CSV = Path(__file__).with_name("paises.csv")
 COLUMNAS = ["nombre", "poblacion", "superficie", "continente"]
@@ -11,11 +12,10 @@ COLUMNAS = ["nombre", "poblacion", "superficie", "continente"]
 
 def validar_pais(nombre, poblacion, superficie, continente):
     """Construye un registro válido con los tipos y nombres comunes."""
-    if not isinstance(nombre, str) or not nombre.strip():
-        raise ValueError("El nombre del país es obligatorio.")
+    nombre = validar_nombre_pais(nombre)
     if not isinstance(continente, str):
         raise ValueError("El continente debe ser un texto.")
-    return {"nombre": nombre.strip(), "poblacion": entero_positivo(poblacion),
+    return {"nombre": nombre, "poblacion": entero_positivo(poblacion),
             "superficie": entero_positivo(superficie),
             "continente": normalizar_continente(continente)}
 
