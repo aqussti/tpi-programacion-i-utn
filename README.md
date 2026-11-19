@@ -42,7 +42,6 @@ Las poblaciones y superficies deben ser enteros positivos. Los rangos admiten ce
 | `test_sistema.py` | Pruebas de funciones, integración y persistencia |
 | `Informe_TPI.md` / `Informe_TPI.pdf` | Informe editable y versión de entrega |
 | `documentacion/` | Diagrama y salidas capturadas de las pruebas |
-| `Guion_video.md` | Recorrido sugerido para la presentación grupal |
 
 Los valores del dataset se utilizan para ejercitar programación; no se presentan como cifras demográficas actualizadas ni como una base estadística oficial.
 
@@ -97,9 +96,8 @@ Las 14 pruebas usan archivos temporales y no alteran `paises.csv`. Incluyen el m
 
 - [Informe académico y técnico en PDF](Informe_TPI.pdf).
 - [Fuente editable del informe](Informe_TPI.md).
-- [Guion y pasos para grabar el video](Guion_video.md).
-- **Video demostrativo:** pendiente de grabación y publicación por el grupo. Antes de entregar, reemplazar esta nota por el enlace accesible sin iniciar sesión y agregar el mismo enlace al informe.
-- El ZIP de entrega debe contener código, dataset, documentación y recursos. No incluir `.git`, archivos temporales ni `__pycache__`.
+- **Video demostrativo:** [Ver video en Google Drive](https://drive.google.com/file/d/1qLPCRyRKhj5OlGf6fI0Gdy7ix6_1IpoL/view?usp=sharing).
+- El ZIP de entrega contiene código, dataset, informe, pruebas y recursos de documentación. No incluye borradores, archivos temporales ni metadatos de Git.
 
 ## Participación de los integrantes
 
@@ -110,4 +108,4 @@ Las 14 pruebas usan archivos temporales y no alteran `paises.csv`. Incluyen el m
 | Agustin Tromba (@aqussti) | Ordenamiento, estadísticas, repositorio y README; teoría y decisiones técnicas |
 | Fausto Rivero (@faustorivero69-hue) | Menú e integración; armado del informe, video y entrega |
 
-La presentación requiere participación de los cuatro integrantes. Revisar el PDF y completar el enlace del video antes de enviar el ZIP.
+El video y el informe se encuentran enlazados en la sección Documentación y entrega.

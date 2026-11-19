@@ -4,7 +4,7 @@ Trabajo Práctico Integrador - Programación 1
 
 Universidad Tecnológica Nacional
 
-Tecnicatura Universitaria en Programación a Distancia
+Tecnicatura Universitaria en Programación
 
 Comisión 4
 
@@ -28,7 +28,7 @@ Repositorio: https://github.com/aqussti/tpi-programacion-i-utn
 6. Resultados, dificultades y conclusiones .................................. 9
 7. Bibliografía, enlaces y entrega .............................................. 10
 
-El informe documenta el estado del programa al 15/11/2026. El código, el dataset y los recursos utilizados en las evidencias están incluidos en el repositorio. La grabación del video grupal se encuentra pendiente y debe completarse antes de la entrega.
+El informe documenta la versión final del proyecto, revisada el 18/11/2026. El código, el dataset y los recursos utilizados en las evidencias están incluidos en el repositorio. El video demostrativo está enlazado en la sección 7.2.
 
 ---page---
 
@@ -217,10 +217,12 @@ Repositorio: https://github.com/aqussti/tpi-programacion-i-utn
 
 Informe PDF: https://github.com/aqussti/tpi-programacion-i-utn/blob/main/Informe_TPI.pdf
 
-Video demostrativo: pendiente de grabación y publicación por el grupo. Se incluye `Guion_video.md` con un recorrido de aproximadamente doce minutos, distribuido entre los cuatro integrantes. Antes de entregar, incorporar aquí y en el README el enlace con acceso sin iniciar sesión.
+Video demostrativo: [Ver video en Google Drive](https://drive.google.com/file/d/1qLPCRyRKhj5OlGf6fI0Gdy7ix6_1IpoL/view?usp=sharing).
+
+La página del video se comprobó accesible sin iniciar sesión el 18/11/2026.
 
 ### 7.3 Contenido de la entrega
 
-El paquete contiene los seis módulos del programa, el dataset, el README, las pruebas, este informe en PDF y Markdown, el diagrama y las salidas capturadas. La carpeta de aportes conserva los textos individuales como material de respaldo.
+El paquete contiene los seis módulos del programa, el dataset, el README, las pruebas, este informe en PDF y Markdown, el diagrama y las salidas capturadas.
 
-El cierre de la entrega requiere grabar el video, comprobar su acceso público, actualizar sus enlaces y regenerar el ZIP con esa versión definitiva.
+La entrega se organiza en un único ZIP con los archivos finales. Se excluyen borradores, guiones de preparación, cachés de Python y metadatos de Git. El enlace del video también está disponible en el README.
